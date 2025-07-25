@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
   }
 
   startGame() {
-    this.router.navigate(['/game']);
+    this.router.navigate(['/farm']);
   }
 
 }

@@ -1,0 +1,33 @@
+.game-container {
+  max-width: 400px;
+  margin: auto;
+  text-align: center;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.header {
+  margin-bottom: 1rem;
+  background-color: #f9f2dc;
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+.farm-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 80px);
+  gap: 10px;
+  justify-content: center;
+}
+
+.tile {
+  width: 80px;
+  height: 80px;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #d7b98f;
+  border-radius: 8px;
+  cursor: pointer;
+  user-select: none;
+}

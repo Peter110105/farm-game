@@ -1,0 +1,17 @@
+<div class="game-container">
+  <div class="header">
+    <h2>🌾 牧場小遊戲</h2>
+    <div>💰 金錢：{{ game.money }}</div>
+    <div>🕒 時間：{{ game.time | date:'MM/dd HH:mm' }}</div>
+    <div>📦 作物：{{ game.crops }}</div>
+  </div>
+
+  <div class="farm-grid">
+    <div
+      class="tile"
+      *ngFor="let tile of game.field; let i = index"
+      (click)="onTileClick(i)">
+      {{ getEmoji(tile.status) }}
+    </div>
+  </div>
+</div>
