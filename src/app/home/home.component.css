@@ -1,0 +1,30 @@
+.start-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: url('/assets/farm-bg.jpg') no-repeat center center;
+  background-size: cover;
+}
+
+.title {
+  font-size: 4rem;
+  color: #fffbe7;
+  text-shadow: 2px 2px #444;
+  margin-bottom: 2rem;
+}
+
+.start-button {
+  font-size: 1.5rem;
+  padding: 1rem 2rem;
+  background-color: #ffde59;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.start-button:hover {
+  background-color: #ffd000;
+}
