@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CropData } from '../crop-data';
+import { CropData } from '../crop.data';
 import { Crop } from '../crop.module';
 
 @Injectable({

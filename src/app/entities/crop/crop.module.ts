@@ -1,7 +1,8 @@
 export interface Crop {
   name: string;
   type: string; // e.g., 'vegetable', 'fruit'
-  growthTime: number; // in seconds
   icon: string;
-  harvestAmount: number;
+  cost: number;
+  growthTime: number;  // 成長時間(s)
+  harvestAmount: number;// 收穫數量
 }

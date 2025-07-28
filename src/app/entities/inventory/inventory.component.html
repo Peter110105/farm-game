@@ -1,0 +1,18 @@
+<div class="inventory-panel" [class.open]="isOpen">
+  <button class="toggle-btn" (click)="toggle()">
+    {{ isOpen ? '➖ 收合背包' : '🎒 背包' }}
+  </button>
+
+  <div class="inventory-content" *ngIf="isOpen">
+    <h4>容量：{{ service.getTotalQuantity() }} / {{ service.getCapacity() }}</h4>
+    <button class="upgrade-btn" (click)="upgrade()">
+      升級背包 (+10) 💰{{ service.getUpgradeCost() }}
+    </button>
+    <div class="grid">
+      <div class="slot" *ngFor="let item of service.getInventory().items">
+        <div class="icon">{{ item.icon }}</div>
+        <div class="qty">x{{ item.quantity }}</div>
+      </div>
+    </div>
+  </div>
+</div>

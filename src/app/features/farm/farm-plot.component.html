@@ -6,12 +6,21 @@
     <div>📦 作物：{{ game.crops }}</div>
   </div>
 
+  <h3>選擇作物</h3>
+<select [(ngModel)]="selectedCropName">
+  <option *ngFor="let crop of crops" [value]="crop.name">
+    {{ crop.icon }} {{ crop.name }} - ${{ crop.cost }}
+  </option>
+</select>
+
+<hr>
   <div class="farm-grid">
     <div
       class="tile"
       *ngFor="let tile of game.field; let i = index"
       (click)="onTileClick(i)">
-      {{ getEmoji(tile.status) }}
+      {{ getEmoji(tile.status, tile.crop) }}
     </div>
   </div>
 </div>
+<app-inventory></app-inventory>
