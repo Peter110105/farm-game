@@ -10,6 +10,9 @@ export class InventoryService {
   private inventory: Inventory = { items: [], capacity: 30 };
   private upgradeCost = 50;
 
+  setInventory(inventory:Inventory): void{
+    this.inventory = inventory;
+  }
   // 獲得背包
   getInventory(): Inventory {
     return this.inventory;
@@ -43,6 +46,24 @@ export class InventoryService {
       this.inventory.items.push({ ...newItem });
     }
 
+    return true;
+  }
+  // 移除物品
+  removeItem(item: Item, quantity: number): boolean{
+    const index = this.inventory.items.findIndex(
+      i => i.name === item.name && i.type === item.type
+    );
+    if (index === -1) {
+      return false;
+    }
+    const inventoryItem = this.inventory.items[index];
+    // 如果移除數量大於或等於物品庫存，則直接移除該物品
+    if (inventoryItem.quantity <= quantity) {
+      this.inventory.items.splice(index, 1);
+    } else {
+      // 否則，只減少物品數量
+      inventoryItem.quantity -= quantity;
+    }
     return true;
   }
   // 背包升級
