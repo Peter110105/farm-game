@@ -1,0 +1,23 @@
+<h2>商店 🏪</h2>
+<div class="money">💰 金錢: {{ game.money }}</div>
+
+<h3>可購買</h3>
+<div class="shop-grid">
+  <div class="shop-item" *ngFor="let item of items" (click)="buy(item)">
+    @if (item.price > 0) {
+      <div class="icon">{{ item.icon }}</div>
+      <div class="name">{{ item.name }}</div>
+      <div class="price">💰{{ item.price }}</div>
+    }
+  </div>
+</div>
+
+<h3>販賣物品</h3>
+<div class="inventory-grid">
+  <div class="inv-item" *ngFor="let item of inventory.getInventory().items" (click)="sell(item)">
+    <div class="icon">{{ item.icon }}</div>
+    <div class="name">{{ item.name }}</div>
+    <div class="qty">x{{ item.quantity }}</div>
+  </div>
+</div>
+
