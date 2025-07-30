@@ -12,8 +12,8 @@ import { InventoryComponent } from '../../entities/inventory/inventory.component
   imports: [CommonModule, DatePipe, FormsModule, InventoryComponent],
   standalone: true,
   providers: [CropService],
-  templateUrl: './farm-plot.component.html',
-  styleUrls: ['./farm-plot.component.css']
+  templateUrl: './farm.component.html',
+  styleUrls: ['./farm.component.css']
 })
 export class FarmPlotComponent implements OnInit {
   crops: Crop[] = [];

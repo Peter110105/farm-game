@@ -8,8 +8,13 @@ export const routes: Routes = [
     },
     {
         path: 'farm',
-        loadComponent: () => import('./features/farm/farm-plot.component').then(m => m.FarmPlotComponent),
+        loadComponent: () => import('./features/farm/farm.component').then(m => m.FarmPlotComponent),
         title: 'Farm',
+    },
+    {
+        path: 'shop',
+        loadComponent: () => import('./features/shop/shop.component').then(m => m.ShopComponent),
+        title: 'Shop',
     },
 
 ];
