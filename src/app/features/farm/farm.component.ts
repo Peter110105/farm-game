@@ -15,7 +15,7 @@ import { InventoryComponent } from '../../entities/inventory/inventory.component
   templateUrl: './farm.component.html',
   styleUrls: ['./farm.component.css']
 })
-export class FarmPlotComponent implements OnInit {
+export class FarmComponent implements OnInit {
   crops: Crop[] = [];
   selectedCropName: string = '';
   constructor(public game: GameStateService, private cropService: CropService) {}
