@@ -1,0 +1,13 @@
+<h2>牧場 🐔🐄🐑</h2>
+    <!-- <div class="money">💰 {{ game.money }}</div> -->
+
+    <div class="animal-list">
+      <div class="animal" *ngFor="let a of animals">
+        <div class="icon">{{ a.icon }}</div>
+        <div class="name">{{ a.name }} ({{ a.stage }})</div>
+      </div>
+    </div>
+
+    <button (click)="buy('chicken')">買小雞 50💰</button>
+    <button (click)="buy('cow')">買小牛 200💰</button>
+    <button (click)="buy('sheep')">買小羊 150💰</button>
