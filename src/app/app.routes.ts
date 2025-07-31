@@ -1,15 +1,26 @@
 import { Routes } from '@angular/router';
+import { HomeComponent } from './pages/home/home.component';
+import { FarmComponent } from './features/farm/farm.component';
+import { ShopComponent } from './features/shop/shop.component';
 
 export const routes: Routes = [
-    {
-        path: 'home',
-        loadComponent: () => import('./features/home/home.component').then(m => m.HomeComponent),
-        title: 'Home',
-    },
-    {
-        path: 'farm',
-        loadComponent: () => import('./features/farm/farm-plot.component').then(m => m.FarmPlotComponent),
-        title: 'Farm',
-    },
-
+  
+  { 
+    path: 'home', 
+    component: HomeComponent,
+    title: 'Home'
+  },
+  { 
+    path: 'farm', 
+    component: FarmComponent,
+    title: 'Farm'
+  },
+  { 
+    path: 'shop', 
+    component: ShopComponent,
+    title: 'Shop'
+  },
+  { 
+    path: 'welcome', 
+    loadChildren: () => import('./pages/welcome/welcome.routes').then(m => m.WELCOME_ROUTES) }
 ];

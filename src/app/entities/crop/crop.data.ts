@@ -2,11 +2,11 @@ import {Crop} from './crop.module';
 
 export const CropData: Crop[] = [
   {
-    name: 'Wheat',
+    name: '小麥',
     type: 'vegetable',
     icon: '🌾',
     cost: 1,
-    growthTime: 30, // 30 seconds
+    growthTime: 10, // 10 seconds
     harvestAmount: 2
   },
   {
@@ -14,23 +14,23 @@ export const CropData: Crop[] = [
     type: 'vegetable',
     icon: '🌽',
     cost: 5,
-    growthTime: 60, 
+    growthTime: 20, 
     harvestAmount: 1
   },
   {
-    name: 'Carrot',
+    name: '胡蘿蔔',
     type: 'vegetable',
     icon: '🥕',
     cost: 10,
-    growthTime: 90, 
+    growthTime: 30, 
     harvestAmount: 1
   },
   {
-    name: 'Apple',
+    name: '蘋果',
     type: 'fruit',
     icon: '🍎',
     cost: 15,
-    growthTime: 120, // 2 minutes
+    growthTime: 60, 
     harvestAmount: 3
   },
    {
@@ -38,7 +38,7 @@ export const CropData: Crop[] = [
     type: 'fruit',
     icon: '🍓',
     cost: 20,
-    growthTime: 300,
+    growthTime: 120,
     harvestAmount: 5
   },
 ];

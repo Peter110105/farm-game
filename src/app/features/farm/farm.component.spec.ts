@@ -3,19 +3,19 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { FarmPlotComponent } from './farm-plot.component';
+import { FarmComponent } from './farm.component';
 
-describe('FarmPlotComponent', () => {
-  let component: FarmPlotComponent;
-  let fixture: ComponentFixture<FarmPlotComponent>;
+describe('FarmComponent', () => {
+  let component: FarmComponent;
+  let fixture: ComponentFixture<FarmComponent>;
   
     beforeEach(async () => {
       await TestBed.configureTestingModule({
-        imports: [FarmPlotComponent]
+        imports: [FarmComponent]
       })
       .compileComponents();
   
-      fixture = TestBed.createComponent(FarmPlotComponent);
+      fixture = TestBed.createComponent(FarmComponent);
       component = fixture.componentInstance;
       fixture.detectChanges();
     });

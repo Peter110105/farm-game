@@ -12,10 +12,10 @@ import { InventoryComponent } from '../../entities/inventory/inventory.component
   imports: [CommonModule, DatePipe, FormsModule, InventoryComponent],
   standalone: true,
   providers: [CropService],
-  templateUrl: './farm-plot.component.html',
-  styleUrls: ['./farm-plot.component.css']
+  templateUrl: './farm.component.html',
+  styleUrls: ['./farm.component.css']
 })
-export class FarmPlotComponent implements OnInit {
+export class FarmComponent implements OnInit {
   crops: Crop[] = [];
   selectedCropName: string = '';
   constructor(public game: GameStateService, private cropService: CropService) {}
