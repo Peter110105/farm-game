@@ -1,0 +1,43 @@
+.shop-grid,
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 80px);
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.shop-item,
+.inv-item {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 4px;
+  text-align: center;
+  cursor: pointer;
+  background: #fff;
+  transition: 0.2s;
+}
+
+.shop-item:hover,
+.inv-item:hover {
+  background: #f0f0f0;
+}
+
+.icon {
+  font-size: 24px;
+}
+
+.item-modal {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  .icon {
+    font-size: 40px;
+  }
+  .desc {
+    flex: 1;
+  }
+  .quantity {
+    margin-top: 12px;
+  }
+}

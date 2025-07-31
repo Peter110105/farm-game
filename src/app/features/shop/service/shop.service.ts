@@ -17,20 +17,24 @@ export class ShopService {
     return this.items;
   }
 
-  buyItem(item: ShopItem): boolean {
+  buyItem(item: ShopItem, quantity: number = 1): boolean {
     if (this.game.money >= item.price) {
-      this.game.money -= item.price;
+      item.quantity = quantity;
+      this.game.money -= item.price * quantity;
       this.inventory.addItem(item);
       return true;
     }
     return false;
   }
 
-  sellItem(item: Item): boolean {
+  sellItem(item: Item, quantity: number = 1): boolean {
+    if(quantity > item.quantity){
+      return false;
+    }
     const sellPrice = this.items.find(i => i.name === item.name)?.sellPrice ?? 0;
     if (sellPrice > 0) {
-      this.game.money += sellPrice;
-      this.inventory.removeItem(item, 1);
+      this.game.money += sellPrice * quantity;
+      this.inventory.removeItem(item, quantity);
       return true;
     }
     return false;

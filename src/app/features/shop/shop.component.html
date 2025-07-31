@@ -1,23 +1,59 @@
 <h2>商店 🏪</h2>
 <div class="money">💰 金錢: {{ game.money }}</div>
 
-<h3>可購買</h3>
-<div class="shop-grid">
-  <div class="shop-item" *ngFor="let item of items" (click)="buy(item)">
-    @if (item.price > 0) {
-      <div class="icon">{{ item.icon }}</div>
-      <div class="name">{{ item.name }}</div>
-      <div class="price">💰{{ item.price }}</div>
-    }
-  </div>
-</div>
+<nz-tabs>
+  <!-- 買入頁籤 -->
+  <nz-tab nzTitle="購買">
+    <div class="shop-grid">
+      <div
+        class="shop-item"
+        *ngFor="let item of canBuyItems"
+        (click)="openItemModal(item, 'buy')"
+      >
+        <div class="icon">{{ item.icon }}</div>
+        <div class="name">{{ item.name }}</div>
+        <div class="price">💰{{ item.price }}</div>
+      </div>
+    </div>
+  </nz-tab>
 
-<h3>販賣物品</h3>
-<div class="inventory-grid">
-  <div class="inv-item" *ngFor="let item of inventory.getInventory().items" (click)="sell(item)">
-    <div class="icon">{{ item.icon }}</div>
-    <div class="name">{{ item.name }}</div>
-    <div class="qty">x{{ item.quantity }}</div>
-  </div>
-</div>
+  <!-- 賣出頁籤 -->
+  <nz-tab nzTitle="販賣">
+    <div class="inventory-grid">
+      <div
+        class="inv-item"
+        *ngFor="let item of inventory.getInventory().items"
+        (click)="openItemModal(item, 'sell')"
+      >
+        <div class="icon">{{ item.icon }}</div>
+        <div class="name">{{ item.name }}</div>
+        <div class="qty">x{{ item.quantity }}</div>
+      </div>
+    </div>
+  </nz-tab>
+</nz-tabs>
 
+<!-- 物品操作彈窗 -->
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="{{ modalTitle }}"
+  (nzOnCancel)="isVisible = false"
+  (nzOnOk)="confirmAction()"
+>
+<ng-container *nzModalContent>
+  <div class="item-modal">
+    <div class="icon">{{ selectedItem?.icon }}</div>
+    <div class="desc">
+      <p><strong>{{ selectedItem?.name }}</strong></p>
+      <p>類型: {{ selectedItem?.type }}</p>
+      <p *ngIf="actionType === 'buy'">價格: 💰{{ selectedPrice }}</p>
+      <p *ngIf="actionType === 'sell'">售價: 💰{{ selectedSellPrice }}</p>
+    </div>
+
+    <div class="quantity">
+      <label>數量：</label>
+      <nz-input-number [(ngModel)]="quantity" nzMin="1" nzMax = "{{selectedItem?.quantity}}" />
+    </div>
+  </div>
+  </ng-container>
+</nz-modal>

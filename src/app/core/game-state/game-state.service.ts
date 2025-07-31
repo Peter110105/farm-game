@@ -26,7 +26,7 @@ export class GameStateService {
       try{
         const state: GameState = JSON.parse(json);
         this.money = state.money;
-        this.time = state.time;
+        this.time = new Date(state.time);
         this.field = state.field;
         this.inventoryService.setInventory(state.inventory);
       }catch (e){
