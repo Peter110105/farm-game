@@ -1,0 +1,1 @@
+import{Hb as n,Ib as c,hb as m,hc as p}from"./chunk-GQEZZCJS.js";var e=class t{static \u0275fac=function(o){return new(o||t)};static \u0275cmp=m({type:t,selectors:[["app-welcome"]],decls:2,vars:0,template:function(o,a){o&1&&(n(0,"p"),p(1,"welcome works!"),c())},encapsulation:2})};var d=[{path:"",component:e}];export{d as WELCOME_ROUTES};
