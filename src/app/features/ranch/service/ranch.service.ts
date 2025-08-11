@@ -8,90 +8,50 @@ import { AnimalData } from '../../../entities/animal/animal.data';
   providedIn: 'root'
 })
 export class RanchService {
-  animals: Animal[] = [];
-  constructor(private inventoryService: InventoryService, private gameStateService: GameStateService) {}
+  private _animals: Animal[] = [];
+  private _ranchSize = 5; // 初始只能養5隻動物
+  constructor(private inventoryService: InventoryService) {}
 
-  buyAnimal(type: keyof typeof AnimalData): boolean{
-    const data = AnimalData[type];
-    if(!data || this.gameStateService.money < data.price){
+  get animals(): Animal[] {
+    return this._animals;
+  }
+  set animals(value: Animal[]) {
+    this._animals = value;
+  }
+  get ranchSize(): number {
+    return this._ranchSize;
+  }
+  set ranchSize(value: number) {
+    this._ranchSize = value;
+  }
+  
+  buyAnimal(animal: Animal, now: Date): boolean{
+    if(this.animals.length >= this.ranchSize){
       return false;
     }
-    this.gameStateService.money -= data.price;
-    const now = Date.now();
-    const nextStage = now + data.growthStages[0] * 1000;
-    const animal: Animal = {
-      id: (this.animals.length + 1).toString(),
-      type,
-      name: data.name,
-      icon: data.icon,
-      stage: 'baby',
-      bornAt: now,
-      nextStageTime: nextStage,
-      produceItem: data.produceItem,
-      produceInterval: data.produceInterval,
-      lastProduceTime: 0
-    };
+    animal.bornAt = now.getTime();
     this.animals.push(animal);
-    this.save();
     return true;
   }
 
-  updateAnimals(): void{
-    const now = Date.now();
+  updateAnimals(date: Date): void{
     this.animals.forEach(animal => {
       // 成長檢查
-      if(animal.stage !== 'adult' && now >= animal.nextStageTime){
-        if(animal.stage === 'baby'){
-          animal.stage = 'teen';
-          animal.nextStageTime = now + AnimalData[animal.type].growthStages[1] * 1000;
-          animal.icon = this.getStageIcon(animal.type, animal.stage);
-        }
-        else if(animal.stage === 'teen'){
-          animal.stage = 'adult';
-          animal.nextStageTime = 0;
-          animal.icon = this.getStageIcon(animal.type, animal.stage);
-          animal.lastProduceTime = now;
-        }
+      if(animal.stage === 'baby' && (date.getTime() - animal.bornAt) >= animal.growthTime * 1000){
+        animal = AnimalData.find(data => data.id === (animal.id+1)) ?? animal;
+        animal.lastProduceTime = date.getTime();
       }
       // 產出檢查
-      if(animal.stage === 'adult' && animal.produceItem && animal.produceInterval){
-        if(now - (animal.lastProduceTime || 0) >= animal.produceInterval * 1000){
-          this.inventoryService.addItem({
-            name: animal.produceItem,
-            icon: this.getProduceIcon(animal.type),
-            type: 'product',
-            quantity: 1
-          });
-          animal.lastProduceTime = now;
+      if(animal.stage === 'adult' && animal.produceInterval && animal.lastProduceTime 
+        && (date.getTime() - animal.lastProduceTime) >= animal.produceInterval * 1000){
+        animal.lastProduceTime = date.getTime();
+        if(animal.produceItem){
+          this.inventoryService.addItem(animal.produceItem);
+        }
+        else{
+          console.log("warn:動物無產出 ID: ", animal.id);
         }
       }
     });
-    this.save();
-  }
-  private getStageIcon(type: string, stage: AnimalStage): string {
-    const map: Record<string, Record<AnimalStage, string>> = {
-      chicken: { baby: '🐣', teen: '🐥', adult: '🐓' },
-      cow: { baby: '🐄', teen: '🐂', adult: '🐂' },
-      sheep: { baby: '🐑', teen: '🐏', adult: '🐏' },
-    };
-    return map[type]?.[stage] || '❓';
-  }
-
-  private getProduceIcon(type: string): string {
-    const map: Record<string, string> = {
-      chicken: '🥚',
-      cow: '🥛',
-      sheep: '🧶'
-    };
-    return map[type] || '📦';
-  }
-  private save(): void{
-    localStorage.setItem('animals', JSON.stringify(this.animals));
-  }
-  load(): void{
-    const animals = localStorage.getItem('animals');
-    if(animals){
-      this.animals = JSON.parse(animals);
-    }
   }
 }

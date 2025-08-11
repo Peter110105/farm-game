@@ -1,16 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 
-import { Ranch } from './ranch';
+import { RanchComponent } from './ranch.component';
 
-describe('Ranch', () => {
-  let service: Ranch;
+describe('RanchComponent', () => {
+  let component: RanchComponent;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(Ranch);
+    component = TestBed.inject(RanchComponent);
   });
 
   it('should be created', () => {
-    expect(service).toBeTruthy();
+    expect(component).toBeTruthy();
   });
 });

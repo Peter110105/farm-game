@@ -12,14 +12,14 @@ import { InventoryService } from './service/inventory.service';
 })
 export class InventoryComponent {
   isOpen = false;
-  constructor(public service: InventoryService, private game: GameStateService) {}
+  constructor(public inventoryService: InventoryService, private gameService: GameStateService) {}
   
   toggle(): void{
     this.isOpen = !this.isOpen;
   }
 
   upgrade(): void {
-    this.game.tryUpgradeInventory();
+    this.gameService.tryUpgradeInventory();
   }
 
 }

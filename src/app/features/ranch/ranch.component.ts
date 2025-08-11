@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Animal } from '../../entities/animal/animal.model';
-import { RanchService } from './service/ranch.service';
+import { AnimalData } from '../../entities/animal/animal.data';
+import { RanchService } from './service/ranch.service'; 
+import { GameStateService } from '../../core/game-state/game-state.service';
 
 @Component({
   selector: 'app-ranch-component',
@@ -9,21 +11,24 @@ import { RanchService } from './service/ranch.service';
   templateUrl: './ranch.component.html',
   styleUrl: './ranch.component.scss'
 })
-export class RanchComponent implements OnInit{
-  animals: Animal[] = [];
+export class RanchComponent{
 
-  constructor(public ranchService: RanchService){}
+  constructor(public ranchService: RanchService, private gameStateService: GameStateService){}
 
-  ngOnInit(): void {
-      this.ranchService.load();
-      this.animals = this.ranchService.animals;
-      // setInterval(() => {
-        this.ranchService.updateAnimals();
-      // }, 1000);
-  }
-  buy(type: 'chicken' | 'cow' | 'sheep'): void{
-    if (!this.ranchService.buyAnimal(type)) {
-      alert('金錢不足');
+  buy(id: string): void{
+    const data =  AnimalData.find(data => data.id === id);
+    if(!data){
+      alert('無此動物');
+      return;
+    }
+    if(data.cost > this.gameStateService.money){
+      alert('錢不夠');
+      return;
+    }
+    if(this.ranchService.buyAnimal(data, this.gameStateService.time)){
+      this.gameStateService.subMoney(data.cost);
+    }else{
+      alert('動物已滿，請擴大牧場')
     }
   }
 }

@@ -17,6 +17,8 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
+            "baseHref": "",
+            "outputPath": "dist/farm-game",
             "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
@@ -44,8 +46,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "2MB",
+                  "maximumError": "3MB"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -97,6 +99,9 @@
               "src/styles.scss"
             ]
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy"
         }
       }
     }

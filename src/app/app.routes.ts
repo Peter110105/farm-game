@@ -28,5 +28,11 @@ export const routes: Routes = [
   },
   { 
     path: 'welcome', 
-    loadChildren: () => import('./pages/welcome/welcome.routes').then(m => m.WELCOME_ROUTES) }
+    loadChildren: () => import('./pages/welcome/welcome.routes').then(m => m.WELCOME_ROUTES) 
+  },
+  {
+    path: '**',
+    redirectTo: 'home',
+    pathMatch: 'full'
+  }
 ];

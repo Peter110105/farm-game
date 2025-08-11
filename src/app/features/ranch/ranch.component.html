@@ -1,13 +1,15 @@
 <h2>牧場 🐔🐄🐑</h2>
     <!-- <div class="money">💰 {{ game.money }}</div> -->
+    <button (click)="buy('0')">買小雞 50💰</button>
+    <button (click)="buy('2')">買小牛 200💰</button>
+    <button (click)="buy('4')">買小羊 150💰</button>
 
     <div class="animal-list">
-      <div class="animal" *ngFor="let a of animals">
-        <div class="icon">{{ a.icon }}</div>
-        <div class="name">{{ a.name }} ({{ a.stage }})</div>
+      @for (animal of ranchService.animals; track $index) {
+        <div class="animal">
+        <div class="icon">{{ animal.icon }}</div>
+        <div class="name">{{ animal.name }} ({{ animal.stage }})</div>
       </div>
+      }
     </div>
 
-    <button (click)="buy('chicken')">買小雞 50💰</button>
-    <button (click)="buy('cow')">買小牛 200💰</button>
-    <button (click)="buy('sheep')">買小羊 150💰</button>
