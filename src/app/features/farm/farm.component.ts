@@ -5,11 +5,12 @@ import { CropService } from '../../entities/crop/service/crop.service';
 import { Crop } from '../../entities/crop/crop.module';
 import { FormsModule } from '@angular/forms';
 import { InventoryComponent } from '../../entities/inventory/inventory.component';
+import { FarmService } from './service/farm-service';
 
 
 @Component({
   selector: 'app-farm-plot',
-  imports: [CommonModule, DatePipe, FormsModule, InventoryComponent],
+  imports: [CommonModule, FormsModule, InventoryComponent],
   standalone: true,
   providers: [CropService],
   templateUrl: './farm.component.html',
@@ -18,7 +19,7 @@ import { InventoryComponent } from '../../entities/inventory/inventory.component
 export class FarmComponent implements OnInit {
   crops: Crop[] = [];
   selectedCropName: string = '';
-  constructor(public game: GameStateService, private cropService: CropService) {}
+  constructor(private gameService: GameStateService, private cropService: CropService, protected farmService: FarmService ) {}
 
   ngOnInit() {
     this.crops = this.cropService.getAllCrops();
@@ -26,21 +27,22 @@ export class FarmComponent implements OnInit {
   }
 
   onTileClick(index: number): void {
-    const tile = this.game.field[index];
+    const tile = this.farmService.fields[index];
     if (tile.status === 'empty') {
       const crop = this.cropService.getCropByName(this.selectedCropName);
       if(!crop){
         return;
       }
 
-      if(this.game.money < crop.cost){
+      if(this.gameService.money < crop.cost){
         alert('錢不夠，無法種植！');
         return;
       }
-      this.game.plant(index, crop);
+      this.farmService.plant(index, crop);
+      this.gameService.subMoney(crop.cost);
       
     } else if (tile.status === 'grown') {
-      this.game.harvest(index);
+      this.farmService.harvest(index);
     }
   }
 

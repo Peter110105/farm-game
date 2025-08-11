@@ -1,25 +1,21 @@
 <div class="game-container">
-  <div class="header">
-    <h2>🌾 牧場小遊戲</h2>
-    <div>💰 金錢：{{ game.money }}</div>
-    <div>🕒 時間：{{ game.time | date:'MM/dd HH:mm' }}</div>
-  </div>
 
   <h3>選擇作物</h3>
 <select [(ngModel)]="selectedCropName">
-  <option *ngFor="let crop of crops" [value]="crop.name">
+  @for (crop of crops; track $index) {
+    <option [value]="crop.name">
     {{ crop.icon }} {{ crop.name }} - ${{ crop.cost }}
-  </option>
+    </option>
+  }
 </select>
 
 <hr>
   <div class="farm-grid">
-    <div
-      class="tile"
-      *ngFor="let tile of game.field; let i = index"
-      (click)="onTileClick(i)">
-      {{ getEmoji(tile.status, tile.crop) }}
-    </div>
+    @for (filed of farmService.fields; track $index) {
+      <div class="filed" (click)="onTileClick($index)">
+        {{getEmoji(filed.status, filed.crop)}}
+      </div>
+    }
   </div>
 </div>
 <app-inventory></app-inventory>

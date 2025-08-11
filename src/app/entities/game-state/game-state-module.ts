@@ -1,9 +1,9 @@
-import { FarmPlot } from '../farm-plot/farm-plot-module';
+import { Field } from '../field/field-module';
 import { Inventory} from '..//inventory/inventory.model';
 
 export interface GameState { 
   money: number;
   time: Date;
-  field: FarmPlot[];
+  fields: Field[];
   inventory: Inventory;
 }

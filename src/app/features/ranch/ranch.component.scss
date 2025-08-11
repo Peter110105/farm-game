@@ -1,0 +1,12 @@
+.animal-list { 
+    display: flex; 
+    gap: 8px; 
+    flex-wrap: wrap; 
+}
+.animal { 
+    text-align: center; 
+    width: 80px; 
+}
+.icon { 
+    font-size: 32px;
+}
