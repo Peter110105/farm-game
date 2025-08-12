@@ -1,4 +1,4 @@
-import { Crop } from "../crop/crop.module";
+import { Crop } from "../crop/crop.model";
 
 export interface Field {
   status: 'empty' | 'planted' | 'grown'; // 狀態

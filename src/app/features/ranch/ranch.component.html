@@ -1,15 +1,16 @@
 <h2>牧場 🐔🐄🐑</h2>
-    <!-- <div class="money">💰 {{ game.money }}</div> -->
-    <button (click)="buy('0')">買小雞 50💰</button>
-    <button (click)="buy('2')">買小牛 200💰</button>
-    <button (click)="buy('4')">買小羊 150💰</button>
+    
+@for( animal of this.canBuyAnimals; track $index){
+  <button (click)="buy(animal)">買{{animal.name}} {{animal.cost}}💰</button>
+}
 
-    <div class="animal-list">
-      @for (animal of ranchService.animals; track $index) {
-        <div class="animal">
-        <div class="icon">{{ animal.icon }}</div>
-        <div class="name">{{ animal.name }} ({{ animal.stage }})</div>
-      </div>
-      }
-    </div>
+
+<div class="animal-list">
+  @for (animal of ranchService.animals; track $index) {
+    <div class="animal">
+    <div class="icon">{{ animal.icon }}</div>
+    <div class="name">{{ animal.name }} ({{ animal.stage }})</div>
+  </div>
+  }
+</div>
 

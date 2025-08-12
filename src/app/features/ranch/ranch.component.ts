@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Animal } from '../../entities/animal/animal.model';
 import { AnimalData } from '../../entities/animal/animal.data';
 import { RanchService } from './service/ranch.service'; 
-import { GameStateService } from '../../core/game-state/game-state.service';
+import { Animal } from '../../entities/animal/animal.model';
+
 
 @Component({
   selector: 'app-ranch-component',
@@ -13,22 +13,24 @@ import { GameStateService } from '../../core/game-state/game-state.service';
 })
 export class RanchComponent{
 
-  constructor(public ranchService: RanchService, private gameStateService: GameStateService){}
+  canBuyAnimals: Animal[] = [];
 
-  buy(id: string): void{
-    const data =  AnimalData.find(data => data.id === id);
-    if(!data){
-      alert('無此動物');
+  constructor(public ranchService: RanchService){
+    this.canBuyAnimals = AnimalData.filter(animal => animal.cost > 0);
+  }
+
+  get animals(){
+    return this.ranchService.animals;
+  }
+
+  buy(animal: Animal): void{
+    if(!animal){
       return;
     }
-    if(data.cost > this.gameStateService.money){
-      alert('錢不夠');
-      return;
-    }
-    if(this.ranchService.buyAnimal(data, this.gameStateService.time)){
-      this.gameStateService.subMoney(data.cost);
-    }else{
-      alert('動物已滿，請擴大牧場')
+    const result = this.ranchService.trybuyAnimal(animal);
+    if(!result.success){
+      alert(result.message);
     }
   }
+
 }

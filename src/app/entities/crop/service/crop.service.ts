@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CropData } from '../crop.data';
-import { Crop } from '../crop.module';
+import { Crop } from '../crop.model';
 
 @Injectable({
   providedIn: 'root'
