@@ -1,7 +1,16 @@
 # 🌾 FarmGame
+> **版本**：0.4.0  
+> **更新日期**：2025-08-13  
+> **最新更新重點**：拆解 GameStatService 為GameDataService、GameLoopService、GameManagerService、SaveLoadService四部分，並調整相關程式碼。 
+> 📜 [查看完整更新紀錄](CHANGELOG.md)
+> 🎯 **[線上遊玩 Demo（GitHub Pages）](https://peter110105.github.io/farm-game)**  
+
+---
+
+## 📜 專案簡介
 目前正在學習angular開發
 一個使用 **Angular** 開發的簡易農場小遊戲，支援作物種植、背景生長、收穫、背包管理與商店買賣功能。  
-玩家可以在農田種植作物，收穫後賣到商店賺取金錢，並升級背包容量。
+玩家可以在農田種植作物、飼養牲畜，並透過販賣農產品來賺取金錢，並升級背包容量。
 
 ---
 
@@ -22,6 +31,11 @@
   - 出售農作物賺取金錢
   - 商店商品由 `shop-item.data.ts` 統一管理
 
+  - **牧場系統（v0.3.0 新增）**
+  - 可購買雞、牛、羊
+  - 動物有幼年 → 成年二階段
+  - 成年後可產出資源（雞蛋、牛奶、羊毛）
+
 - **遊戲存檔**
   - 使用 LocalStorage 保存金錢、作物狀態、背包內容
   - 即使重新整理或關閉瀏覽器，遊戲進度仍會保存
@@ -41,8 +55,6 @@
 - **商店與背包**
   ![Shop](docs/screenshots/shop.png)
 
-> 💡 建議將截圖存放於 `docs/screenshots/` 資料夾，方便 GitHub 讀取。
-
 ---
 
 ## 🛠️ 專案結構
@@ -51,21 +63,26 @@
 
 src/app
 ├─ core
-│  └─ game-state         # 全域遊戲狀態管理與存檔
+│  ├─ game-data          # 用來統一管理錢跟時間
+│  ├─ game-loop          # 負責處理遊戲更新
+│  ├─ game-manager       # 協調各服務，初始化與管理遊戲狀態
+│  └─ game-load          # 負責儲存與載入遊戲狀態
 │
 ├─ entities
-│  ├─ crop               # 作物資料與服務
-│  ├─ farm-plot          # 農田格
-│  ├─ game-state         # 全域遊戲狀態管理與存檔
-│  ├─ inventory          # 背包功能（元件與服務）
-│  └─ item               # 基礎物品定義
+│  ├─ animal             # 動物模型、資料
+│  ├─ crop               # 作物模型、資料與服務
+│  ├─ field              # 農田格模型
+│  ├─ game-state         # 全域遊戲狀態模型
+│  ├─ inventory          # 背包模型、服務、元件
+│  └─ item               # 基礎物品模型
 │
 ├─ features
 │  ├─ farm               # 農田功能（種植、收穫）
+│  ├─ ranch              # 牧場功能（飼養、生產農產品）
 │  └─ shop               # 商店功能（買賣物品）
 │
 ├─ pages
-│  ├─ home               # 遊戲首頁
+│  └─ home               # 遊戲首頁
 │               
 └─ shared                # 共用元件或管道
 
@@ -75,11 +92,10 @@ src/app
 
 ## 📖 後續規劃
 
-* 農作物生長動畫與進度條
 * 更多種子與農作物
-* 道具系統（澆水、施肥）
+* 道具系統（施肥）
 * 任務與成就系統
-* GitHub Pages 或 Vercel Demo
+* GitHub Pages 
 
 ---
 

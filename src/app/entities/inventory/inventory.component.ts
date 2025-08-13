@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GameStateService } from '../../core/game-state/game-state.service';
 import { InventoryService } from './service/inventory.service';
 
 @Component({
@@ -12,14 +11,17 @@ import { InventoryService } from './service/inventory.service';
 })
 export class InventoryComponent {
   isOpen = false;
-  constructor(public inventoryService: InventoryService, private gameService: GameStateService) {}
+  constructor(public inventoryService: InventoryService) {}
   
   toggle(): void{
     this.isOpen = !this.isOpen;
   }
 
   upgrade(): void {
-    this.gameService.tryUpgradeInventory();
+    const result = this.inventoryService.tryUpgradeInventory();
+    if (!result.success) {
+      alert(result.message);
+    }
   }
 
 }

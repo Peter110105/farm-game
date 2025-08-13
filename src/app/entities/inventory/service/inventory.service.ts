@@ -1,15 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Inventory } from '../inventory.model';
 import { Item } from '../../item/item.model';
+import { GameDataService } from '../../../core/game-data/game-data.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InventoryService {
 
-  private inventory: Inventory = { items: [], capacity: 30 };
+  private inventory: Inventory = { items: [], capacity: 20 };
   private upgradeCost = 50;
 
+  constructor(private gameDataService: GameDataService) {}
+
+  // 設定背包
   setInventory(inventory:Inventory): void{
     this.inventory = inventory;
   }
@@ -29,13 +33,12 @@ export class InventoryService {
   getCapacity(): number {
     return this.inventory.capacity;
   }
+  // 是否滿了
+  isFull(quantity: number = 0): boolean {
+    return  this.inventory.capacity < this.getTotalQuantity() + quantity;
+  }
   // 增加物品
-  addItem(newItem: Item): boolean{
-    const availableSpace = this.inventory.capacity - this.getTotalQuantity();
-    if (availableSpace < newItem.quantity) {
-      return false;
-    }
-
+  addItem(newItem: Item){
     const existing = this.inventory.items.find(
       item => item.name === newItem.name && item.type === newItem.type
     );
@@ -45,8 +48,6 @@ export class InventoryService {
     } else {
       this.inventory.items.push({ ...newItem });
     }
-
-    return true;
   }
   // 移除物品
   removeItem(item: Item, quantity: number): boolean{
@@ -66,11 +67,21 @@ export class InventoryService {
     }
     return true;
   }
+  // 檢查升級條件
+  tryUpgradeInventory():{ success: boolean; message: string } {
+    if (this.gameDataService.money < this.upgradeCost) {
+      return { success: false, message: `金錢不足，需要 ${this.upgradeCost - this.gameDataService.money} 金幣才能升級背包` };
+    }
+    this.gameDataService.subMoney(this.upgradeCost);
+    this.upgradeInventory();
+    return { success: true, message: '背包升級成功' };
+  }
   // 背包升級
   upgradeInventory(): void {
     this.inventory.capacity += 10;
     this.upgradeCost = Math.floor(this.upgradeCost * 1.5);
   }
+      
   // 清空背包
   clear(): void{
     this.inventory.items = [];

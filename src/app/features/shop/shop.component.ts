@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ShopItem } from './shop-item.model';
 import { ShopService } from './service/shop.service';
-import { GameStateService } from '../../core/game-state/game-state.service';
 import { InventoryService } from '../../entities/inventory/service/inventory.service';
 import { Item } from '../../entities/item/item.model';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { GameDataService } from '../../core/game-data/game-data.service';
 
 @Component({
   selector: 'app-shop',
@@ -28,8 +28,8 @@ export class ShopComponent implements OnInit {
 
   constructor(
     public shop: ShopService, 
-    public game: GameStateService, 
-    public inventory: InventoryService
+    public inventory: InventoryService,
+    public gameDataService: GameDataService,
   ){}
 
   ngOnInit(): void {
@@ -39,7 +39,6 @@ export class ShopComponent implements OnInit {
   
   openItemModal(item: Item | ShopItem, action: 'buy' | 'sell'): void {
     this.selectedItem = item;
-    console.log(this.selectedItem);
     this.actionType = action;
     this.quantity = 1;
     this.modalTitle = action === 'buy' ? '購買' : '販賣';
@@ -55,14 +54,16 @@ export class ShopComponent implements OnInit {
     this.isVisible = false;
   }
   buy(item: ShopItem): void {
-    if (!this.shop.buyItem(item, this.quantity)) {
-      alert('購買失敗，可能金錢不足或背包滿了');
+    const result = this.shop.buyItem(item, this.quantity);
+    if (!result.success) {
+      alert(result.message);
     }
   }
 
   sell(item: Item): void {
-    if (!this.shop.sellItem(item, this.quantity)) {
-      alert('無法販售此物品');
+    const result = this.shop.sellItem(item, this.quantity);
+    if(!result.success){
+      alert(result.message);
     }
   }
 

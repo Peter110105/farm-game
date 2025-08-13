@@ -7,7 +7,7 @@ export const AnimalData: Animal[] = [
     type: 'chicken',
     name: '小雞',
     icon: '🐣',
-    cost: 100,
+    cost: 50,
     stage: 'baby',
     bornAt: 0, // 靜態資料不需要這個，可以設為0
     growthTime: 60, // 60秒後長大
@@ -38,7 +38,7 @@ export const AnimalData: Animal[] = [
     type: 'cow',
     name: '小牛',
     icon: '🐮',
-    cost: 300,
+    cost: 200,
     stage: 'baby',
     bornAt: 0,
     growthTime: 180, // 3分鐘後長大
@@ -69,7 +69,7 @@ export const AnimalData: Animal[] = [
     type: 'sheep',
     name: '小羊',
     icon: '🐑',
-    cost: 400,
+    cost: 250,
     stage: 'baby',
     bornAt: 0,
     growthTime: 180, // 3分鐘後長大

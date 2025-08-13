@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "baseHref": "",
+            "baseHref": "/farm-game/",
             "outputPath": "dist/farm-game",
             "browser": "src/main.ts",
             "polyfills": [
