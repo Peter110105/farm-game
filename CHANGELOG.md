@@ -1,5 +1,18 @@
 # 📜 更新紀錄
 
+## [0.4.0] - 2025-08-12
+### 拆解 GameStatService
+- **GameDataService**
+  - 用來統一管理錢跟時間
+- **GameLoopService**
+  - 負責處理遊戲更新
+- **GameManagerService**
+  - 協調各服務，初始化與管理遊戲狀態
+- **SaveLoadService**
+  - 負責儲存與載入遊戲狀態
+  
+---
+
 ## [0.3.0] - 2025-08-11
 ### 新增
 - **牧場系統**

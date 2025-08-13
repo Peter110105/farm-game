@@ -1,8 +1,9 @@
 # 🌾 FarmGame
-> **版本**：0.3.0  
-> **更新日期**：2025-08-12  
-> **最新更新重點**：新增牧場系統，可飼養雞、牛、羊，從幼年成長為成年並產出雞蛋、牛奶、羊毛等資源。  
+> **版本**：0.4.0  
+> **更新日期**：2025-08-13  
+> **最新更新重點**：拆解 GameStatService 為GameDataService、GameLoopService、GameManagerService、SaveLoadService四部分，並調整相關程式碼。 
 > 📜 [查看完整更新紀錄](CHANGELOG.md)
+> 🎯 **[線上遊玩 Demo（GitHub Pages）](https://peter110105.github.io/farm-game)**  
 
 ---
 
@@ -32,7 +33,7 @@
 
   - **牧場系統（v0.3.0 新增）**
   - 可購買雞、牛、羊
-  - 動物有幼年 → 成年三階段
+  - 動物有幼年 → 成年二階段
   - 成年後可產出資源（雞蛋、牛奶、羊毛）
 
 - **遊戲存檔**
@@ -54,8 +55,6 @@
 - **商店與背包**
   ![Shop](docs/screenshots/shop.png)
 
-> 💡 建議將截圖存放於 `docs/screenshots/` 資料夾，方便 GitHub 讀取。
-
 ---
 
 ## 🛠️ 專案結構
@@ -64,12 +63,15 @@
 
 src/app
 ├─ core
-│  └─ game-state         # 全域遊戲狀態管理與存檔
+│  ├─ game-data          # 用來統一管理錢跟時間
+│  ├─ game-loop          # 負責處理遊戲更新
+│  ├─ game-manager       # 協調各服務，初始化與管理遊戲狀態
+│  └─ game-load          # 負責儲存與載入遊戲狀態
 │
 ├─ entities
 │  ├─ animal             # 動物模型、資料
 │  ├─ crop               # 作物模型、資料與服務
-│  ├─ farm-plot          # 農田格模型
+│  ├─ field              # 農田格模型
 │  ├─ game-state         # 全域遊戲狀態模型
 │  ├─ inventory          # 背包模型、服務、元件
 │  └─ item               # 基礎物品模型
@@ -90,11 +92,10 @@ src/app
 
 ## 📖 後續規劃
 
-* 農作物生長動畫與進度條
 * 更多種子與農作物
-* 道具系統（澆水、施肥）
+* 道具系統（施肥）
 * 任務與成就系統
-* GitHub Pages 或 Vercel Demo
+* GitHub Pages 
 
 ---
 
