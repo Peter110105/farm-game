@@ -1,37 +1,24 @@
-.inventory-panel {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  width: 240px;
-  background-color: #fffbe0;
-  border: 2px solid #ccc;
-  border-radius: 10px;
-  padding: 10px;
-  transition: transform 0.3s ease;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  transform: translateX(100%);
-  z-index: 1000;
+.inventory-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
 }
 
-.inventory-panel.open {
-  transform: translateX(0%);
-}
-
-.toggle-btn {
-  position: absolute;
-  top: -10px;
-  left: -90px;
-  background-color: #f0c36d;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 8px;
-  cursor: pointer;
+.stat {
+  font-size: 14px;
   font-weight: bold;
-  box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+}
+
+.inventory-info {
+  margin-top: 10px;
+  padding: 6px 0;
+  border-bottom: 1px solid #eee;
 }
 
 .upgrade-btn {
-  margin-bottom: 10px;
+  margin-top: 6px;
   padding: 6px 10px;
   background-color: #a2d5c6;
   border: none;
@@ -39,13 +26,10 @@
   cursor: pointer;
 }
 
-.inventory-content h4 {
-  margin: 5px 0;
-}
-
-.grid {
+.inventory-grid {
+  margin-top: 12px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fill, 50px);
   gap: 8px;
 }
 

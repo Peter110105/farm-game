@@ -1,15 +1,14 @@
 <div class="game-container">
-
   <h3>選擇作物</h3>
-<select [(ngModel)]="selectedCropName">
-  @for (crop of crops; track $index) {
-    <option [value]="crop.name">
-    {{ crop.icon }} {{ crop.name }} - ${{ crop.cost }}
-    </option>
-  }
-</select>
+  <select [(ngModel)]="selectedCropName">
+    @for (crop of crops; track $index) {
+      <option [value]="crop.name">
+      {{ crop.icon }} {{ crop.name }} - ${{ crop.cost }}
+      </option>
+    }
+  </select>
 
-<hr>
+  <hr>
   <div class="farm-grid">
     @for (filed of farmService.fields; track $index) {
       <div class="filed" (click)="onTileClick($index)">
@@ -18,4 +17,4 @@
     }
   </div>
 </div>
-<app-inventory></app-inventory>
+ <app-inventory></app-inventory>

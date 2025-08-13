@@ -1,14 +1,32 @@
-<div class="inventory-panel" [class.open]="isOpen">
-  <button class="toggle-btn" (click)="toggle()">
-    {{ isOpen ? '➖ 收合背包' : '🎒 背包' }}
-  </button>
-  @if (isOpen) {
-  <div class="inventory-content">
-    <h4>容量：{{ inventoryService.getTotalQuantity() }} / {{ inventoryService.getCapacity() }}</h4>
-    <button class="upgrade-btn" (click)="upgrade()">
-      升級背包 (+10) 💰{{ inventoryService.getUpgradeCost() }}
-    </button>
-    <div class="grid">
+<button nz-button nzType="primary" (click)="toggle()">Open</button> 
+<nz-drawer 
+  [nzClosable]="true" 
+  [nzVisible]="visible"
+  nzPlacement="right"
+  nzTitle="背包"
+  (nzOnClose)="toggle()"
+>
+  <ng-container *nzDrawerContent>
+    <!-- 上方金錢 & 時間 -->
+    <div class="inventory-header">
+      <div class="stat">
+        💰 <span>{{ gameDataService.money }}</span>
+      </div>
+      <div class="stat">
+        ⏰ <span>{{ gameDataService.time | date: 'HH:mm:ss'}}</span>
+      </div>
+    </div>
+
+    <!-- 容量 & 升級 -->
+    <div class="inventory-info">
+      <h4>容量：{{ inventoryService.getTotalQuantity() }} / {{ inventoryService.getCapacity() }}</h4>
+      <button class="upgrade-btn" (click)="upgrade()">
+        升級背包 (+10) 💰{{ inventoryService.getUpgradeCost() }}
+      </button>
+    </div>
+
+    <!-- 物品格 -->
+    <div class="inventory-grid">
       @for (item of inventoryService.getInventory().items; track $index) {
         <div class="slot">
           <div class="icon">{{ item.icon }}</div>
@@ -16,6 +34,5 @@
         </div>
       }
     </div>
-  </div>
-  }
-</div>
+  </ng-container>
+</nz-drawer>
