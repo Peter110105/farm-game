@@ -12,7 +12,7 @@ export class CropService {
     return this.crops;
   }
   getCropByName(name: string): Crop | undefined {
-    return this.crops.find(crop => crop.name === name);
+    return this.crops.find(crop => crop.seedItem.name === name);
   }
 
 }

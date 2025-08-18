@@ -1,6 +1,11 @@
-import { Item } from '../item/item.model';
+import { Item } from "../item/item.model";
+
+export interface InventoryItem extends Item{
+  quantity: number;
+}
 
 export interface Inventory {
-  items: Item[];
+  lv: number;
+  items: InventoryItem[];
   capacity: number;
 }

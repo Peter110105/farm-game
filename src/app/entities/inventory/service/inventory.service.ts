@@ -8,7 +8,11 @@ import { GameDataService } from '../../../core/game-data/game-data.service';
 })
 export class InventoryService {
 
-  private inventory: Inventory = { items: [], capacity: 20 };
+  private inventory: Inventory = {
+    lv: 1,
+    items: [],
+    capacity: 20
+  };
   private upgradeCost = 50;
 
   constructor(private gameDataService: GameDataService) {}
@@ -25,6 +29,13 @@ export class InventoryService {
   getUpgradeCost(): number {
     return this.upgradeCost;
   }
+  // 
+  getItemQuantity(item: Item): number {
+    const inventoryItem = this.inventory.items.find(
+      i => i.name === item.name && i.type === item.type
+    );
+    return inventoryItem ? inventoryItem.quantity : 0;
+  }
   // 獲得物品總數量
   getTotalQuantity(): number {
     return this.inventory.items.reduce((sum, item) => sum + item.quantity, 0);
@@ -38,15 +49,15 @@ export class InventoryService {
     return  this.inventory.capacity < this.getTotalQuantity() + quantity;
   }
   // 增加物品
-  addItem(newItem: Item){
+  addItem(newItem: Item, quantity: number = 1){
     const existing = this.inventory.items.find(
       item => item.name === newItem.name && item.type === newItem.type
     );
 
     if (existing) {
-      existing.quantity += newItem.quantity;
+      existing.quantity += quantity;
     } else {
-      this.inventory.items.push({ ...newItem });
+      this.inventory.items.push({ ...newItem, quantity });
     }
   }
   // 移除物品

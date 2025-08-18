@@ -4,24 +4,21 @@
 <nz-tabs>
   <!-- 買入頁籤 -->
   <nz-tab nzTitle="購買">
-    <div class="shop-grid">
-      @for (item of canBuyItems; track $index) {
-        <div class="shop-item" (click)="openItemModal(item, 'buy')">
-          <div class="icon">{{ item.icon }}</div>
-          <div class="name">{{ item.name }}</div>
-          <div class="price">💰{{ item.price }}</div>
-        </div>
+    <nz-tabs [nzTabPosition]="'left'">
+      @for(key of buyTypes.keys(); track $index) {
+        <nz-tab nzTitle="{{ buyTypes.get(key) }}">
+          <div class="shop-grid">
+            @for (item of getcanBuyItems(key); track $index) {
+              <div class="shop-item" (click)="openItemModal(item, 'buy')">
+                <div class="icon">{{ item.icon }}</div>
+                <div class="name">{{ item.name }}</div>
+                <div class="price">💰{{ item.sellPrice }}</div>
+              </div>
+            }
+          </div>
+        </nz-tab>
       }
-      <!-- <div
-        class="shop-item"
-        *ngFor="let item of canBuyItems"
-        (click)="openItemModal(item, 'buy')"
-      >
-        <div class="icon">{{ item.icon }}</div>
-        <div class="name">{{ item.name }}</div>
-        <div class="price">💰{{ item.price }}</div>
-      </div> -->
-    </div>
+    </nz-tabs>
   </nz-tab>
 
   <!-- 賣出頁籤 -->
@@ -61,7 +58,7 @@
 
     <div class="quantity">
       <label>數量：</label>
-      <nz-input-number [(ngModel)]="quantity" nzMin="1" nzMax = "{{selectedItem?.quantity}}" />
+      <nz-input-number [(ngModel)]="quantity" nzMin="1" nzMax = "{{maxQuantity}}" />
     </div>
   </div>
   </ng-container>

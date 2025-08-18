@@ -68,20 +68,18 @@ export class RanchService {
       let animal = this.animals[i];
       // 成長檢查
       if(animal.stage === 'baby' && (now - animal.bornAt) >= animal.growthTime * 1000){
-        this.animals[i]=  AnimalData.find(data => data.id === (parseInt(animal.id)+1).toString()) ?? animal;
+        this.animals[i]=  AnimalData.find(data => data.id === (animal.id+1)) ?? animal;
         this.animals[i].lastProduceTime = now;
       }
       // 產出檢查
-      console.log(animal.stage === 'adult' && animal.produceInterval && animal.lastProduceTime 
-        && ((now - animal.lastProduceTime) >= animal.produceInterval * 1000));
       if(animal.stage === 'adult' && animal.produceInterval && animal.lastProduceTime 
         && (now - animal.lastProduceTime) >= animal.produceInterval * 1000){
         if(animal.produceItem){
-          if(this.inventoryService.isFull(animal.produceItem.quantity)){
+          if(this.inventoryService.isFull(1)){
             return;
           }
           animal.lastProduceTime = now;
-          this.inventoryService.addItem(animal.produceItem);
+          this.inventoryService.addItem(animal.produceItem, 1);
         }
         else{
           console.log("warn:動物無產出 ID: ", animal.id);

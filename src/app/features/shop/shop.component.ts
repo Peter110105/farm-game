@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ShopItem } from './shop-item.model';
+
 import { ShopService } from './service/shop.service';
 import { InventoryService } from '../../entities/inventory/service/inventory.service';
 import { Item } from '../../entities/item/item.model';
@@ -17,12 +17,13 @@ import { GameDataService } from '../../core/game-data/game-data.service';
   styleUrl: './shop.component.scss'
 })
 export class ShopComponent implements OnInit {
-  items: ShopItem[] = [];
-  canBuyItems: ShopItem[] = [];
+  items: Item[] = [];
   isVisible = false;
-  selectedItem: Item | ShopItem | null = null;
-  actionType: 'buy' | 'sell' = 'buy';
+  selectedItem: Item | null = null;
+  actionType: 'buy' | 'sell' = 'buy'; 
+  buyTypes: Map<string, string> = new Map([['crop', '作物'], ['produce', '動物產品'], ['processed', '加工產品']]);
   quantity = 1;
+  maxQuantity = 99; // 假設最大購買數量為99
   modalTitle = '';
 
 
@@ -34,26 +35,31 @@ export class ShopComponent implements OnInit {
 
   ngOnInit(): void {
     this.items = this.shop.getItems();
-    this.canBuyItems = this.items.filter(item => item.price > 0);
   }
   
-  openItemModal(item: Item | ShopItem, action: 'buy' | 'sell'): void {
+  getcanBuyItems(type: string): Item[] {
+    // return this.items.filter(item => item.type === type && (item.price || 0) > 0);
+    return this.items.filter(item => item.type === type );
+  }
+
+  openItemModal(item: Item , action: 'buy' | 'sell'): void {
     this.selectedItem = item;
     this.actionType = action;
     this.quantity = 1;
     this.modalTitle = action === 'buy' ? '購買' : '販賣';
+    this.maxQuantity = action === 'buy' ? 99 : this.inventory.getItemQuantity(item);
     this.isVisible = true;
   }
   confirmAction(): void {
     if(!this.selectedItem) return;
     if (this.actionType === 'buy') {
-      this.buy(this.selectedItem as ShopItem);
+      this.buy(this.selectedItem as Item);
     } else {
       this.sell(this.selectedItem as Item);
     }
     this.isVisible = false;
   }
-  buy(item: ShopItem): void {
+  buy(item: Item): void {
     const result = this.shop.buyItem(item, this.quantity);
     if (!result.success) {
       alert(result.message);

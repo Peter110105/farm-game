@@ -28,13 +28,14 @@ export class FarmService {
   // 檢查種植條件
   tryPlant(index: number, crop: Crop): { success: boolean; message: string }{
     const money = this.gameDataService.money;
-    if (money >= crop.cost) {
-      this.gameDataService.subMoney(crop.cost);
+    const cost = crop.seedItem.price;
+    if (money >= cost) {
+      this.gameDataService.subMoney(cost);
       this.plant(index, crop);
       return { success: true, message: `種植成功！` };
     }
     else{
-      return { success: false, message: `金錢不足，需要 ${ crop.cost - money} 金幣才能升級背包` };
+      return { success: false, message: `金錢不足，需要 ${ cost - money} 金幣才能升級背包` };
     }
   }
   // 種植
@@ -55,18 +56,14 @@ export class FarmService {
   harvest(index: number): void {
     const tile = this.fields[index];
     if (tile.status === 'grown' && tile.crop) {
-      const item: Item = {
-        name: tile.crop.name,
-        icon: tile.crop.icon,
-        type: 'crop',
-        quantity: tile.crop.harvestAmount
-      };
+      const crop = tile.crop;
 
-      if(this.inventoryService.isFull(item.quantity)){
+
+      if(this.inventoryService.isFull(crop.harvestAmount)){
         alert('背包已滿');
         return;
       }
-      this.inventoryService.addItem(item);
+      this.inventoryService.addItem(crop.produceItem, crop.harvestAmount);
       this.fields[index] = { status: 'empty', plantedAt: null, crop: null };
     }
   }
