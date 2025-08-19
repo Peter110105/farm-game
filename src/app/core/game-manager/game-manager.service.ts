@@ -20,10 +20,10 @@ export class GameManagerService {
     private inventoryService: InventoryService,
     private ranchService: RanchService
   ) {
-      this.initialGame();
     }
-  
-    private initialGame(){
+    
+    // 初始化遊戲
+    initialGame(){
       // 1.先載入遊戲狀態
       this.loadGame();
 
@@ -88,6 +88,12 @@ export class GameManagerService {
       this.inventoryService.clear();
       this.ranchService.initial();
       this.saveGame();
+    }
+    // 清除遊戲存檔
+    clearGame(): void {
+      this.gameLoopService.stopGameLoop();
+      this.saveLoadService.clear();
+      console.log('遊戲已清除');
     }
     // 停止遊戲
     stopGame(): void {

@@ -5,12 +5,6 @@ import { ShopComponent } from './features/shop/shop.component';
 import { RanchComponent } from './features/ranch/ranch.component';
 
 export const routes: Routes = [
-  
-  { 
-    path: 'home', 
-    component: HomeComponent,
-    title: 'Home'
-  },
   { 
     path: 'farm', 
     component: FarmComponent,
@@ -26,13 +20,9 @@ export const routes: Routes = [
     component: RanchComponent,
     title: 'Ranch'
   },
-  { 
-    path: 'welcome', 
-    loadChildren: () => import('./pages/welcome/welcome.routes').then(m => m.WELCOME_ROUTES) 
-  },
   {
     path: '**',
-    redirectTo: 'home',
+    redirectTo: 'farm',
     pathMatch: 'full'
   }
 ];

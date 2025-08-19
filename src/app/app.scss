@@ -1,3 +1,4 @@
+/* 遊戲主介面樣式 */
 :host {
   display: flex;
 }
@@ -43,4 +44,44 @@ nz-content {
   padding: 24px;
   background: #fff;
   height: 100%;
+}
+
+
+// home畫面
+.start-screen {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  // background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: url('/assets/farm-bg.jpg') no-repeat center center;
+  font-family: 'Arial', sans-serif;
+}
+.title {
+  font-size: 4rem;
+  color: #fffbe7;
+  text-shadow: 2px 2px 4px #444;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.button {
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  margin: 0.5rem 0;   /* 每個按鈕間距 */
+  background-color: #ffde59;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  width: 220px;       /* 固定寬度讓按鈕整齊 */
+}
+
+.button:hover {
+  background-color: #ffd000;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
