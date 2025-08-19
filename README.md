@@ -1,7 +1,7 @@
 # 🌾 FarmGame
-> **版本**：0.4.0  
-> **更新日期**：2025-08-13  
-> **最新更新重點**：拆解 GameStatService 為GameDataService、GameLoopService、GameManagerService、SaveLoadService四部分，並調整相關程式碼。 
+> **版本**：0.5.0  
+> **更新日期**：2025-08-19  
+> **最新更新重點**：1.首頁新增「繼續遊戲」、「清除遊戲」、「設定」、「關於」按鈕 2.重構動物、作物、物品與背包模型結構
 > 📜 [查看完整更新紀錄](CHANGELOG.md)
 > 🎯 **[線上遊玩 Demo（GitHub Pages）](https://peter110105.github.io/farm-game)**  
 
@@ -44,8 +44,6 @@
 
 ## 🖼️ 遊戲截圖
 
-> ⚡ 以下為示意圖，完成 UI 後可放上實際截圖
-
 - **遊戲首頁**
   ![Home Screen](docs/screenshots/home.png)
 
@@ -82,7 +80,6 @@ src/app
 │  └─ shop               # 商店功能（買賣物品）
 │
 ├─ pages
-│  └─ home               # 遊戲首頁
 │               
 └─ shared                # 共用元件或管道
 

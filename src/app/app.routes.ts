@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
 import { FarmComponent } from './features/farm/farm.component';
 import { ShopComponent } from './features/shop/shop.component';
 import { RanchComponent } from './features/ranch/ranch.component';
