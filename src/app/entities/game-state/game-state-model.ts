@@ -1,6 +1,7 @@
+import { Animal } from '../animal/animal.model';
 import { Field } from '../field/field-model';
 import { Inventory} from '..//inventory/inventory.model';
-import { Animal } from '../animal/animal.model';
+import { Quest } from '../quest/quest.model';
 
 export interface GameState { 
   money: number;
@@ -9,4 +10,7 @@ export interface GameState {
   inventory: Inventory;
   ranchSize: number;
   animals: Animal[];
+  activeQuests: Quest[];
+  completedQuests: Quest[];
+  availableQuests: Quest[];
 }

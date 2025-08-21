@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule} from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { CropService } from '../../entities/crop/service/crop.service';
 import { Crop } from '../../entities/crop/crop.model';
-import { FormsModule } from '@angular/forms';
-import { InventoryComponent } from '../../entities/inventory/inventory.component';
 import { FarmService } from './service/farm-service';
 
 @Component({
   selector: 'app-farm-plot',
-  imports: [CommonModule, FormsModule, InventoryComponent],
+  imports: [CommonModule, FormsModule],
   standalone: true,
   providers: [CropService],
   templateUrl: './farm.component.html',

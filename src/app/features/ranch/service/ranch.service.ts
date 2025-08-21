@@ -3,6 +3,7 @@ import { Animal, AnimalStage } from '../../../entities/animal/animal.model';
 import { InventoryService } from '../../../entities/inventory/service/inventory.service';
 import { AnimalData } from '../../../entities/animal/animal.data';
 import { GameDataService } from '../../../core/game-data/game-data.service';
+import { QuestManagerService } from '../../../core/quest-manager/quest-manager.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ export class RanchService {
 
   constructor(
     private inventoryService: InventoryService, 
-    private gameDataService: GameDataService
+    private gameDataService: GameDataService,
+    private questManagerService: QuestManagerService,
   ) {}
 
   get animals(): Animal[] {
@@ -59,7 +61,8 @@ export class RanchService {
     const now = this.gameDataService.time;
     animal.bornAt = now.getTime();
     this.animals.push(animal);
-
+    // 更新任務進度
+    this.questManagerService.updateProgress('buy', animal.id, 1);
   }
 
   updateAnimals(): void{
@@ -80,6 +83,8 @@ export class RanchService {
           }
           animal.lastProduceTime = now;
           this.inventoryService.addItem(animal.produceItem, 1);
+          // 更新任務進度
+          this.questManagerService.updateProgress('collect', animal.produceItem.id, 1);
         }
         else{
           console.log("warn:動物無產出 ID: ", animal.id);

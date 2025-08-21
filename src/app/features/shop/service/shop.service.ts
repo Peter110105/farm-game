@@ -3,14 +3,18 @@ import { InventoryService } from '../../../entities/inventory/service/inventory.
 import { Item } from '../../../entities/item/item.model';
 import { ItemData } from '../../../entities/item/item.data';
 import { GameDataService } from '../../../core/game-data/game-data.service';
-import { max } from 'rxjs';
+import { QuestManagerService } from '../../../core/quest-manager/quest-manager.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShopService {
 
-  constructor(private inventoryService: InventoryService, private gameDataService: GameDataService ) {}
+  constructor(
+    private inventoryService: InventoryService, 
+    private gameDataService: GameDataService,
+    private questManagerService: QuestManagerService,
+  ) {}
   
   getItems(): Item[] {
     return ItemData;
@@ -23,6 +27,8 @@ export class ShopService {
       if (money >= cost) {
         this.gameDataService.subMoney(cost);
         this.inventoryService.addItem(item, quantity);
+        // 更新任務進度
+        this.questManagerService.updateProgress('buy', item.id, quantity);
         return { success: true, message: '購買成功' };
       }else{
         return { success: false, message: '金錢不足' };
@@ -37,6 +43,8 @@ export class ShopService {
     if (sellPrice > 0) {
       this.gameDataService.addMoney(sellPrice * quantity);
       this.inventoryService.removeItem(item, quantity);
+      // 更新任務進度
+      this.questManagerService.updateProgress('sell', item.id, quantity);
       return { success: true, message: '販賣成功' };
     }
     return { success: false, message: '無法販售此物品' };

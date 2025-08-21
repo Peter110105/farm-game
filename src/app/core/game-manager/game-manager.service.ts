@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import { GameDataService } from '../game-data/game-data.service';
 import { GameLoopService } from '../game-loop/game-loop.service';
 import { SaveLoadService } from '../save-load/save-load.service';
-import { FarmService } from '../../features/farm/service/farm-service';
+import { QuestManagerService } from '../quest-manager/quest-manager.service';
 import { InventoryService } from '../../entities/inventory/service/inventory.service';
+import { FarmService } from '../../features/farm/service/farm-service';
 import { RanchService } from '../../features/ranch/service/ranch.service';
 import { GameState } from '../../entities/game-state/game-state-model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +18,7 @@ export class GameManagerService {
     private gameDataService: GameDataService, 
     private gameLoopService: GameLoopService, 
     private saveLoadService: SaveLoadService,
+    private questManagerService: QuestManagerService,
     private farmService: FarmService,
     private inventoryService: InventoryService,
     private ranchService: RanchService
@@ -41,6 +44,7 @@ export class GameManagerService {
       this.gameLoopService.registerUpdateCallback(() => {
         this.farmService.updateGrowth();
         this.ranchService.updateAnimals();
+        this.questManagerService.updateQuests();
       });
      // 註冊自動保存
       this.gameLoopService.registerSaveCallback(() => {
@@ -59,6 +63,7 @@ export class GameManagerService {
           this.farmService.fields = savedState.fields;
           this.inventoryService.setInventory(savedState.inventory);
           this.ranchService.load(savedState.animals, savedState.ranchSize);
+          this.questManagerService.loadQuestProgress(savedState.activeQuests, savedState.completedQuests, savedState.availableQuests);
         }
         catch (error){
           console.error('載入遊戲失敗:', error);
@@ -77,7 +82,10 @@ export class GameManagerService {
         fields: this.farmService.fields,
         inventory: this.inventoryService.getInventory(),
         ranchSize: this.ranchService.ranchSize,
-        animals: this.ranchService.animals
+        animals: this.ranchService.animals,
+        activeQuests: this.questManagerService.getActiveQuests(),
+        completedQuests: this.questManagerService.getCompletedQuests(),
+        availableQuests: this.questManagerService.getAvailableQuests(),
       };
       this.saveLoadService.save(state);
     }

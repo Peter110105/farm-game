@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
+import { GameDataService } from '../../../core/game-data/game-data.service';
 import { InventoryService } from '../../../entities/inventory/service/inventory.service';
 import { Crop } from '../../../entities/crop/crop.model';
-import { Item } from '../../../entities/item/item.model';
 import { Field } from '../../../entities/field/field-model';
-import { GameDataService } from '../../../core/game-data/game-data.service';
+import { QuestManagerService } from '../../../core/quest-manager/quest-manager.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ export class FarmService {
 
   constructor(
     private inventoryService: InventoryService, 
-    private gameDataService: GameDataService
+    private gameDataService: GameDataService,
+    private questManagerService: QuestManagerService
   ) {}
   
   get fields(): Field[] {
@@ -35,12 +37,15 @@ export class FarmService {
       return { success: true, message: `種植成功！` };
     }
     else{
-      return { success: false, message: `金錢不足，需要 ${ cost - money} 金幣才能升級背包` };
+      return { success: false, message: `金錢不足，需要 ${ cost - money} 金幣才能種植` };
     }
   }
   // 種植
   plant(index: number, crop: Crop): void {
+    // 種植
     this.fields[index] = { status: 'planted', plantedAt: this.gameDataService.time.getTime(), crop: crop };
+    // 更新任務進度
+    this.questManagerService.updateProgress('plant', crop.seedItem.id, 1);
   }
   // 成長
   updateGrowth(): void {
@@ -57,14 +62,16 @@ export class FarmService {
     const tile = this.fields[index];
     if (tile.status === 'grown' && tile.crop) {
       const crop = tile.crop;
-
-
+      // 檢查背包是否滿了
       if(this.inventoryService.isFull(crop.harvestAmount)){
         alert('背包已滿');
         return;
       }
+      // 添加收穫物品到背包
       this.inventoryService.addItem(crop.produceItem, crop.harvestAmount);
       this.fields[index] = { status: 'empty', plantedAt: null, crop: null };
+      // 更新任務進度
+      this.questManagerService.updateProgress('collect', crop.produceItem.id, crop.harvestAmount);
     }
   }
 

@@ -1,0 +1,106 @@
+<button nz-button nzType="primary" (click)="toggle()">
+  <i nz-icon nzType="menu"></i> 任務面板
+</button>
+<nz-drawer 
+  [nzClosable]="true" 
+  [nzVisible]="visible"
+  nzPlacement="right"
+  nzTitle="任務面板"
+  (nzOnClose)="toggle()">
+    <nz-tabs *nzDrawerContent>
+      <nz-tab nzTitle="可接取">
+            <nz-collapse>
+                @for (quest of getAvailableQuests(); track $index) {
+                    <nz-collapse-panel [nzHeader]="quest.title" [nzActive]="true">
+                        <div class="quest-item">
+                            <p>任務 {{ quest.id }} {{quest.title}}</p>
+                            <p>任務描述{{ quest.description }}</p>
+                            <p>任務目標: 
+                                @for(target of quest.targets; track $index) {
+                                    <p>{{ target.itemId }}</p>
+                                    <p>目標數量: {{ target.target }}</p>
+                                    <p>目前數量: {{ target.current }}</p>
+                                }
+                            </p>
+                            <p>獎勵: 
+                                @if(quest.reward.money){
+                                    <p >金錢: {{ quest.reward.money }}</p>
+                                }
+                                @if(quest.reward.items){
+                                    @for(item of quest.reward.items; track $index) {
+                                        <p>{{ item.itemId }}: {{ item.quantity }}</p>
+                                    }
+                                }
+                            </p>
+                            <button nz-button nzType="primary" (click)="acceptQuest(quest.id)">接取</button>
+                        </div>
+                    </nz-collapse-panel>
+                }
+            </nz-collapse>
+        </nz-tab>
+
+        <nz-tab nzTitle="進行中">
+            <nz-collapse>
+                @for (quest of getActiveQuests(); track $index) {
+                    <nz-collapse-panel [nzHeader]="quest.title" [nzActive]="true">
+                        <div class="quest-item">
+                            <p>任務 {{ quest.id }} {{quest.title}}</p>
+                            <p>任務描述{{ quest.description }}</p>
+                            <p>任務目標: 
+                                @for(target of quest.targets; track $index) {
+                                    <p>{{ target.itemId }}</p>
+                                    <p>目標數量: {{ target.target }}</p>
+                                    <p>目前數量: {{ target.current }}</p>
+                                }
+                            </p>
+                            <nz-progress [nzPercent]="getQuestProgress(quest.id)" ></nz-progress>
+                            <p>獎勵: 
+                                @if(quest.reward.money){
+                                    <p >金錢: {{ quest.reward.money }}</p>
+                                }
+                                @if(quest.reward.items){
+                                    @for(item of quest.reward.items; track $index) {
+                                        <p>{{ item.itemId }}: {{ item.quantity }}</p>
+                                    }
+                                }
+                            </p>
+                            @if(quest.completed) {
+                                <button nz-button nzType="primary" (click)="claimReward(quest.id)">領取獎勵</button>
+                            }
+                        </div>
+                    </nz-collapse-panel>
+                }
+            </nz-collapse>
+        </nz-tab>
+
+        <nz-tab nzTitle="已完成">
+            <nz-collapse>
+                @for (quest of getCompletedQuests(); track $index) {
+                    <nz-collapse-panel [nzHeader]="quest.title" [nzActive]="true">
+                        <div class="quest-item">
+                            <p>任務 {{ quest.id }} {{quest.title}}</p>
+                            <p>任務描述{{ quest.description }}</p>
+                            <p>任務目標: 
+                                @for(target of quest.targets; track $index) {
+                                    <p>{{ target.itemId }}</p>
+                                    <p>目標數量: {{ target.target }}</p>
+                                    <p>目前數量: {{ target.current }}</p>
+                                }
+                            </p>
+                            <p>獎勵: 
+                                @if(quest.reward.money){
+                                    <p >金錢: {{ quest.reward.money }}</p>
+                                }
+                                @if(quest.reward.items){
+                                    @for(item of quest.reward.items; track $index) {
+                                        <p>{{ item.itemId }}: {{ item.quantity }}</p>
+                                    }
+                                }
+                            </p>
+                        </div>
+                    </nz-collapse-panel>
+                }
+            </nz-collapse>
+        </nz-tab>
+    </nz-tabs>
+</nz-drawer>
