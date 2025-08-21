@@ -15,6 +15,16 @@
   </nz-header>
   <nz-content>
     <div class="inner-content">
+      <div class="inventory-header">
+        <div class="stat">
+          💰 <span>{{ getMoney() }}</span>
+          ⏰ <span>{{ getTime() | date:'HH:mm:ss'}}</span>
+        </div>
+      </div>
+      <nz-space>
+        <app-inventory></app-inventory>
+        <app-quest-board></app-quest-board>
+      </nz-space>
       <router-outlet></router-outlet>
     </div>
   </nz-content>
@@ -30,4 +40,3 @@
       <button (click)="openAbout()" class="button">關於</button>
   </div>
 }
-

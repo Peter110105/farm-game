@@ -1,4 +1,4 @@
-<button nz-button nzType="primary" (click)="toggle()">Open</button> 
+<button nz-button nzType="primary" (click)="toggle()">背包</button> 
 <nz-drawer 
   [nzClosable]="true" 
   [nzVisible]="visible"
@@ -7,16 +7,6 @@
   (nzOnClose)="toggle()"
 >
   <ng-container *nzDrawerContent>
-    <!-- 上方金錢 & 時間 -->
-    <div class="inventory-header">
-      <div class="stat">
-        💰 <span>{{ gameDataService.money }}</span>
-      </div>
-      <div class="stat">
-        ⏰ <span>{{ gameDataService.time | date: 'HH:mm:ss'}}</span>
-      </div>
-    </div>
-
     <!-- 容量 & 升級 -->
     <div class="inventory-info">
       <h4>容量：{{ inventoryService.getTotalQuantity() }} / {{ inventoryService.getCapacity() }}</h4>
