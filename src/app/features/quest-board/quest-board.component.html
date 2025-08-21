@@ -8,7 +8,7 @@
   nzTitle="任務面板"
   (nzOnClose)="toggle()">
     <nz-tabs *nzDrawerContent>
-      <nz-tab nzTitle="可接取">
+        <nz-tab nzTitle="可接取">
             <nz-collapse>
                 @for (quest of getAvailableQuests(); track $index) {
                     <nz-collapse-panel [nzHeader]="quest.title" [nzActive]="true">
@@ -17,7 +17,11 @@
                             <p>任務描述{{ quest.description }}</p>
                             <p>任務目標: 
                                 @for(target of quest.targets; track $index) {
-                                    <p>{{ target.itemId }}</p>
+                                    <p>
+                                        {{getTargetTypeText(target.type)}} 
+                                        {{ itemService.getItemById(target.itemId!)?.icon}}
+                                        {{ itemService.getItemById(target.itemId!)?.name}}
+                                    </p>
                                     <p>目標數量: {{ target.target }}</p>
                                     <p>目前數量: {{ target.current }}</p>
                                 }
@@ -28,7 +32,10 @@
                                 }
                                 @if(quest.reward.items){
                                     @for(item of quest.reward.items; track $index) {
-                                        <p>{{ item.itemId }}: {{ item.quantity }}</p>
+                                        <p>
+                                            {{ itemService.getItemById(item.itemId!)?.icon}}
+                                            {{ itemService.getItemById(item.itemId!)?.name}}: {{ item.quantity }}
+                                        </p>
                                     }
                                 }
                             </p>
@@ -48,19 +55,26 @@
                             <p>任務描述{{ quest.description }}</p>
                             <p>任務目標: 
                                 @for(target of quest.targets; track $index) {
-                                    <p>{{ target.itemId }}</p>
+                                    <p>
+                                        {{getTargetTypeText(target.type)}} 
+                                        {{ itemService.getItemById(target.itemId!)?.icon}}
+                                        {{ itemService.getItemById(target.itemId!)?.name}}
+                                    </p>
                                     <p>目標數量: {{ target.target }}</p>
                                     <p>目前數量: {{ target.current }}</p>
+                                    <nz-progress [nzPercent]="getQuestProgress(target.target, target.current)"></nz-progress>
                                 }
                             </p>
-                            <nz-progress [nzPercent]="getQuestProgress(quest.id)" ></nz-progress>
                             <p>獎勵: 
                                 @if(quest.reward.money){
                                     <p >金錢: {{ quest.reward.money }}</p>
                                 }
                                 @if(quest.reward.items){
                                     @for(item of quest.reward.items; track $index) {
-                                        <p>{{ item.itemId }}: {{ item.quantity }}</p>
+                                        <p>
+                                            {{ itemService.getItemById(item.itemId!)?.icon}}
+                                            {{ itemService.getItemById(item.itemId!)?.name}}: {{ item.quantity }}
+                                        </p>
                                     }
                                 }
                             </p>
@@ -82,7 +96,11 @@
                             <p>任務描述{{ quest.description }}</p>
                             <p>任務目標: 
                                 @for(target of quest.targets; track $index) {
-                                    <p>{{ target.itemId }}</p>
+                                    <p>
+                                        {{getTargetTypeText(target.type)}} 
+                                        {{ itemService.getItemById(target.itemId!)?.icon}}
+                                        {{ itemService.getItemById(target.itemId!)?.name}}
+                                    </p>
                                     <p>目標數量: {{ target.target }}</p>
                                     <p>目前數量: {{ target.current }}</p>
                                 }
@@ -93,7 +111,10 @@
                                 }
                                 @if(quest.reward.items){
                                     @for(item of quest.reward.items; track $index) {
-                                        <p>{{ item.itemId }}: {{ item.quantity }}</p>
+                                        <p>
+                                            {{ itemService.getItemById(item.itemId!)?.icon}}
+                                            {{ itemService.getItemById(item.itemId!)?.name}}: {{ item.quantity }}
+                                        </p>
                                     }
                                 }
                             </p>

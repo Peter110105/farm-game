@@ -118,22 +118,6 @@ export class QuestManagerService {
 
       return { success: true, message: '獎勵已領取。' };
   }
-
-  // 取得任務進度百分比
-  getProgress(questId: number): number {
-    const quest = this.activeQuests.find(q => q.id === questId);
-    if (!quest) return 0;
-
-    // 計算總目標數量
-    const totalTargets = quest.targets.reduce((acc, target) => acc + target.target, 0);
-    if (totalTargets === 0) return 0; // 避免除以零
-
-    // 計算已完成的目標數量
-    const completedTargets = quest.targets.reduce((acc, target) => acc + target.current, 0);
-
-    // 返回進度百分比
-    return Math.round((completedTargets / totalTargets) * 100);
-  }
   
   // === 進度更新 ===
 

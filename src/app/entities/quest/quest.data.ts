@@ -62,7 +62,7 @@ export const QuestData: Quest[] = [
       requiredQuests: [3]
     },
     targets: [
-      { type: 'buy', itemId: 0, target: 0, current: 0 }
+      { type: 'buy', itemId: 0, target: 1, current: 0 }
     ],
     reward: {
       money: 200,
