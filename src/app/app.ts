@@ -1,21 +1,48 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { Router, RouterOutlet, RouterLink } from '@angular/router';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import { GameManagerService } from './core/game-manager/game-manager.service';
+import { GameDataService } from './core/game-data/game-data.service';
+import { InventoryComponent } from "./entities/inventory/inventory.component";
+import { QuestBoardComponent } from "./features/quest-board/quest-board.component";
+import { NzSpaceModule} from 'ng-zorro-antd/space';
+
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, NzLayoutModule, NzMenuModule, NzModalModule],
+  imports: [
+    RouterOutlet, 
+    RouterLink, 
+    NzLayoutModule, 
+    NzMenuModule, 
+    NzModalModule,
+    NzSpaceModule, 
+    InventoryComponent, 
+    QuestBoardComponent, 
+    DatePipe],
   templateUrl: './app.html',
   styleUrl: './app.scss', 
 })
 export class App {
   gameStarted = false; // 控制遊戲是否已開始
+  constructor(
+    private router: Router, 
+    private gameMangerService: GameManagerService, 
+    private modalService: NzModalService, 
+    private gameDataService: GameDataService
+  ) {
 
-  constructor(private router: Router, private gameMangerService: GameManagerService, private modalService: NzModalService) {}
-  
+  }
+  getMoney() {
+    return this.gameDataService.money;
+  }
+  getTime() {
+    return this.gameDataService.time;
+  }
+
   newGame(){
     if (this.gameStarted) {
       return; // 如果遊戲已經開始，則不執行任何操作

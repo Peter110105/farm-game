@@ -190,7 +190,7 @@ export const ItemData: Item[] = [
     // === 加工食品 ===
     {
         id: 300,
-        name: '麵粉',
+        name: '吐司',
         icon: '🍞',
         type: 'processed',
         price: 0,
