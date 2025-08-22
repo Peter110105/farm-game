@@ -20,6 +20,7 @@ export class InventoryService {
   // 設定背包
   setInventory(inventory:Inventory): void{
     this.inventory = inventory;
+    this.upgradeCost = 50 + (this.inventory.lv - 1) * 20; // 初始升級成本
   }
   // 獲得背包
   getInventory(): Inventory {
@@ -90,7 +91,9 @@ export class InventoryService {
   // 背包升級
   upgradeInventory(): void {
     this.inventory.capacity += 10;
-    this.upgradeCost = Math.floor(this.upgradeCost * 1.5);
+    // 每升級一次，升級成本增加20
+    this.upgradeCost = Math.floor(this.upgradeCost + this.inventory.lv * 20);
+    this.inventory.lv += 1;
   }
       
   // 清空背包
@@ -98,5 +101,6 @@ export class InventoryService {
     this.inventory.items = [];
     this.inventory.capacity = 20;
     this.upgradeCost = 50;
+    this.inventory.lv = 1;
   }
 }

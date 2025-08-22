@@ -11,6 +11,8 @@ import { QuestManagerService } from '../../../core/quest-manager/quest-manager.s
 })
 export class FarmService {
   private _fields: Field[] = Array.from({ length: 9 }, () => ({ status: 'empty', plantedAt: null, crop: null }));
+  private _farmLv = 1;
+  private _upgradeCost = 100;
 
   constructor(
     private inventoryService: InventoryService, 
@@ -24,8 +26,29 @@ export class FarmService {
   set fields(value: Field[]) {
     this._fields = value;
   }
+  get farmLv(): number {
+    return this._farmLv;
+  }
+  set farmLv(value: number) {
+    this._farmLv = value;
+  }
+  get upgradeCost(): number {
+    return this._upgradeCost;
+  }
+  set upgradeCost(value: number) {
+    this._upgradeCost = value;
+  }
+  // 設定農田
+  setFarm(fields: Field[], farmLv: number =1): void {
+    this.fields = fields;
+    this.farmLv = farmLv;
+    this.upgradeCost = 50 + (this.farmLv - 1) * 200; // 初始升級成本
+  }
+
   initial(){
     this.fields = Array.from({ length: 9 }, () => ({ status: 'empty', plantedAt: null, crop: null }));
+    this.farmLv = 1;
+    this.upgradeCost = 50;
   }
   // 檢查種植條件
   tryPlant(index: number, crop: Crop): { success: boolean; message: string }{
@@ -74,5 +97,25 @@ export class FarmService {
       this.questManagerService.updateProgress('collect', crop.produceItem.id, crop.harvestAmount);
     }
   }
-
+  // 檢查升級條件
+  tryUpgradeFarm():{ success: boolean; message: string } {
+    if (this.gameDataService.money < this.upgradeCost) {
+      return { success: false, message: `金錢不足，需要 ${this.upgradeCost - this.gameDataService.money} 金幣才能升級農田` };
+    }
+    this.gameDataService.subMoney(this.upgradeCost);
+    this.upgradeFarm();
+    return { success: true, message: '農田升級成功' };
+  }
+  // 農田升級
+  upgradeFarm(): void {
+    const newFields: Field[] = Array.from({ length: 3 }, () => ({
+    status: 'empty',
+    plantedAt: null,
+    crop: null
+  }));
+    this.fields.push(...newFields);
+    // 每升級一次，升級成本增加100
+    this.upgradeCost = Math.floor(this.upgradeCost + this.farmLv * 100);
+    this.farmLv += 1;
+  }
 }

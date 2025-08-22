@@ -7,9 +7,11 @@
       </option>
     }
   </select>
-
+  <button class="upgrade-btn" (click)="upgrade()">
+        升級農田 💰{{ farmService.upgradeCost }}
+  </button>
   <hr>
-  <div class="farm-grid">
+  <div class="farm-grid" [style.gridTemplateColumns]="getGridColumns()">
     @for (filed of farmService.fields; track $index) {
       <div class="filed" (click)="onTileClick($index)">
         {{getEmoji(filed.status, filed.crop)}}

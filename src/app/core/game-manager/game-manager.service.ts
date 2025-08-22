@@ -60,9 +60,9 @@ export class GameManagerService {
         try{
           this.gameDataService.money = savedState.money;
           this.gameDataService.time = new Date(savedState.time);
-          this.farmService.fields = savedState.fields;
+          this.farmService.setFarm(savedState.fields, savedState.farmLv);
           this.inventoryService.setInventory(savedState.inventory);
-          this.ranchService.load(savedState.animals, savedState.ranchSize);
+          this.ranchService.load(savedState.animals, savedState.ranchSize, savedState.ranchLv);
           this.questManagerService.loadQuestProgress(savedState.activeQuests, savedState.completedQuests, savedState.availableQuests);
         }
         catch (error){
@@ -80,9 +80,12 @@ export class GameManagerService {
         money: this.gameDataService.money,
         time: this.gameDataService.time,
         fields: this.farmService.fields,
+        farmLv: this.farmService.farmLv,
         inventory: this.inventoryService.getInventory(),
-        ranchSize: this.ranchService.ranchSize,
+        
         animals: this.ranchService.animals,
+        ranchSize: this.ranchService.ranchSize,
+        ranchLv: this.ranchService.ranchLv,
         activeQuests: this.questManagerService.getActiveQuests(),
         completedQuests: this.questManagerService.getCompletedQuests(),
         availableQuests: this.questManagerService.getAvailableQuests(),

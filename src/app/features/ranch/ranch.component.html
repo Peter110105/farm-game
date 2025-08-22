@@ -3,7 +3,9 @@
 @for( animal of this.canBuyAnimals; track $index){
   <button (click)="buy(animal)">買{{animal.name}} {{animal.cost}}💰</button>
 }
-
+  <button class="upgrade-btn" (click)="upgrade()">
+        升級牧場 💰{{ ranchService.upgradeCost }}
+  </button>
 
 <div class="animal-list">
   @for (animal of ranchService.animals; track $index) {

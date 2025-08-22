@@ -14,7 +14,7 @@
 
 .farm-grid {
   display: grid;
-  grid-template-columns: repeat(3, 80px);
+  /* grid-template-columns: repeat(3, 80px); */
   gap: 10px;
   justify-content: center;
 }
@@ -30,4 +30,13 @@
   border-radius: 8px;
   cursor: pointer;
   user-select: none;
+}
+
+.upgrade-btn {
+  margin-top: 6px;
+  padding: 6px 10px;
+  background-color: #a2d5c6;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
 }

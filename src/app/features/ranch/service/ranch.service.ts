@@ -11,6 +11,8 @@ import { QuestManagerService } from '../../../core/quest-manager/quest-manager.s
 export class RanchService {
   private _animals: Animal[] = [];
   private _ranchSize = 5; // 初始只能養5隻動物 
+  private _ranchLv = 1;
+  private _upgradeCost = 250;
 
   constructor(
     private inventoryService: InventoryService, 
@@ -30,16 +32,31 @@ export class RanchService {
   set ranchSize(value: number) {
     this._ranchSize = value;
   }
-  
+  get ranchLv(): number {
+    return this._ranchLv;
+  }
+  set ranchLv(value: number) {
+    this._ranchLv = value;
+  }
+  get upgradeCost(): number {
+    return this._upgradeCost;
+  }
+  set upgradeCost(value: number) {
+    this._upgradeCost = value;
+  }
   // 重製牧場
   initial(): void {
     this.animals = [];
     this.ranchSize = 5;
+    this.ranchLv = 1;
+    this.upgradeCost = 250;
   }
 
-  load(animals: Animal[], ranchSize: number): void {
+  load(animals: Animal[], ranchSize: number, ranchLv: number): void {
     this.animals = animals;
     this.ranchSize = ranchSize;
+    this.ranchLv = ranchLv;
+    this.upgradeCost = 250 + (this.ranchLv - 1) * 150; // 初始升級成本
   }
 
   trybuyAnimal(animal: Animal): { success: boolean; message: string }{
@@ -64,7 +81,7 @@ export class RanchService {
     // 更新任務進度
     this.questManagerService.updateProgress('buy', animal.id, 1);
   }
-
+  // 更新動物狀態
   updateAnimals(): void{
     const now = this.gameDataService.time.getTime();
     for(let i = 0; i < this.animals.length; i++){
@@ -91,6 +108,23 @@ export class RanchService {
         }
       }
     }
+  }
+
+    // 檢查升級條件
+  tryUpgradeRanch():{ success: boolean; message: string } {
+    if (this.gameDataService.money < this.upgradeCost) {
+      return { success: false, message: `金錢不足，需要 ${this.upgradeCost - this.gameDataService.money} 金幣才能升級牧場` };
+    }
+    this.gameDataService.subMoney(this.upgradeCost);
+    this.upgradeRanch();
+    return { success: true, message: '牧場升級成功' };
+  }
+  // 牧場升級
+  upgradeRanch(): void {
+    this.ranchSize += 2; // 每次升級增加2個牧場容量
+    // 每升級一次，升級成本增加150
+    this.upgradeCost = Math.floor(this.upgradeCost + this.ranchLv * 150);
+    this.ranchLv += 1;
   }
 
 }

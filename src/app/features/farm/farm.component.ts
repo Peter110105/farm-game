@@ -47,4 +47,16 @@ export class FarmComponent implements OnInit {
       default: return '❓';
     }
   }
+
+  getGridColumns(): string {
+  const colCount = Math.ceil(Math.sqrt(this.farmService.fields.length)); 
+  return `repeat(${colCount}, 80px)`;
+  }
+  
+  upgrade(): void {
+    const result = this.farmService.tryUpgradeFarm();
+    if (!result.success) {
+      alert(result.message);
+    }
+  }
 }

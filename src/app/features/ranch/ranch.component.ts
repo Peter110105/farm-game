@@ -32,5 +32,12 @@ export class RanchComponent{
       alert(result.message);
     }
   }
+  upgrade(): void {
+    const result = this.ranchService.tryUpgradeRanch();
+    if (!result.success) {
+      alert(result.message);
+      return;
+    }
+  }
 
 }

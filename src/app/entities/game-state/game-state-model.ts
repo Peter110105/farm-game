@@ -7,9 +7,11 @@ export interface GameState {
   money: number;
   time: Date;
   fields: Field[];
+  farmLv: number;
   inventory: Inventory;
-  ranchSize: number;
   animals: Animal[];
+  ranchSize: number;
+  ranchLv: number;
   activeQuests: Quest[];
   completedQuests: Quest[];
   availableQuests: Quest[];
