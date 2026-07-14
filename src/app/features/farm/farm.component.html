@@ -1,6 +1,6 @@
 <div class="game-container">
   <h3>選擇作物</h3>
-  <select [(ngModel)]="selectedCrop">
+  <select title="選擇種植作物" [(ngModel)]="selectedCrop">
     @for (crop of crops; track $index) {
       <option [ngValue]="crop">
       {{ crop.seedItem.icon }} {{ crop.seedItem.name }} - ${{ crop.seedItem.price }}

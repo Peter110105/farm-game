@@ -1,7 +1,7 @@
-import { AnimalType, Animal } from "./animal.model";
-
+import { AnimalType, Animal } from './animal.model';
 
 export const AnimalData: Animal[] = [
+  // ===== 雞系列 =====
   {
     id: 0,
     type: 'chicken',
@@ -9,8 +9,9 @@ export const AnimalData: Animal[] = [
     icon: '🐣',
     cost: 50,
     stage: 'baby',
-    bornAt: 0, // 靜態資料不需要這個，可以設為0
-    growthTime: 60, // 60秒後長大
+    bornAt: 0,
+    growthTime: 60, // 60 秒後長大
+    produceItemId: undefined, // 幼雞不產出
     produceInterval: undefined,
     lastProduceTime: undefined,
   },
@@ -19,23 +20,16 @@ export const AnimalData: Animal[] = [
     type: 'chicken',
     name: '雞',
     icon: '🐓',
-    cost: 0, // 成年雞不能直接買，所以成本為0
+    cost: 0, // 成年雞不能直接購買
     stage: 'adult',
     bornAt: 0,
     growthTime: 0, // 成年後不再長大
-    produceItem: {
-        id: 100,
-        name: '雞蛋',
-        icon: '🥚',
-        type: 'produce',
-        price: 0,
-        sellPrice: 25,
-        displayOrder: 0,
-        description: '新鮮雞蛋，可用於烹飪。'
-    }, 
-    produceInterval: 180, // （3分鐘）產蛋
+    produceItemId: 100, // 產出：雞蛋 (id: 100)
+    produceInterval: 180, // 3 分鐘產一次
     lastProduceTime: 0,
   },
+
+  // ===== 牛系列 =====
   {
     id: 2,
     type: 'cow',
@@ -44,7 +38,8 @@ export const AnimalData: Animal[] = [
     cost: 200,
     stage: 'baby',
     bornAt: 0,
-    growthTime: 180, // 3分鐘後長大
+    growthTime: 180, // 3 分鐘後長大
+    produceItemId: undefined,
     produceInterval: undefined,
     lastProduceTime: undefined,
   },
@@ -57,19 +52,12 @@ export const AnimalData: Animal[] = [
     stage: 'adult',
     bornAt: 0,
     growthTime: 0,
-    produceItem: {
-        id: 101,
-        name: '牛奶',
-        icon: '🥛',
-        type: 'produce',
-        price: 0,
-        sellPrice: 50,
-        displayOrder: 1,
-        description: '新鮮牛奶，營養豐富。'
-    },
-    produceInterval: 360, // 每6分鐘產奶
+    produceItemId: 101, // 產出：牛奶 (id: 101)
+    produceInterval: 360, // 6 分鐘產一次
     lastProduceTime: 0,
   },
+
+  // ===== 羊系列 =====
   {
     id: 4,
     type: 'sheep',
@@ -78,11 +66,12 @@ export const AnimalData: Animal[] = [
     cost: 250,
     stage: 'baby',
     bornAt: 0,
-    growthTime: 180, // 3分鐘後長大
+    growthTime: 180, // 3 分鐘後長大
+    produceItemId: undefined,
     produceInterval: undefined,
     lastProduceTime: undefined,
   },
-   {
+  {
     id: 5,
     type: 'sheep',
     name: '綿羊',
@@ -91,17 +80,8 @@ export const AnimalData: Animal[] = [
     stage: 'adult',
     bornAt: 0,
     growthTime: 0,
-    produceItem: {
-        id: 102,
-        name: '羊毛',
-        icon: '🧶',
-        type: 'produce',
-        price: 0,
-        sellPrice: 60,
-        displayOrder: 2,
-        description: '柔軟的羊毛，可用於製作衣物。'
-    },
-    produceInterval: 300, // 每5分鐘產羊毛
+    produceItemId: 102, // 產出：羊毛 (id: 102)
+    produceInterval: 300, // 5 分鐘產一次
     lastProduceTime: 0,
   },
 ];
