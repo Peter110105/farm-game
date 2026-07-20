@@ -56,7 +56,7 @@ export class ItemService {
 
     if (!seedItem) {
       throw new Error(
-        `[資料不同步] Crop ID ${crop.id} 無法找到種子物品。` +
+        `[資料不同步] Crop seedItemId ${crop.seedItemId} 無法找到種子物品。` +
           `seedItemId=${crop.seedItemId}。` +
           `請檢查 crop.data.ts 中的 seedItemId 是否對應 item.data.ts 中的真實 ID。`,
       );
@@ -64,7 +64,7 @@ export class ItemService {
 
     if (!produceItem) {
       throw new Error(
-        `[資料不同步] Crop ID ${crop.id} 無法找到產出物品。` +
+        `[資料不同步] Crop produceItemId ${crop.produceItemId} 無法找到產出物品。` +
           `produceItemId=${crop.produceItemId}。` +
           `請檢查 crop.data.ts 中的 produceItemId 是否對應 item.data.ts 中的真實 ID。`,
       );

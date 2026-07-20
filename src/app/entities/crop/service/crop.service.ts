@@ -24,30 +24,6 @@ export class CropService {
   }
 
   /**
-   * 取得包含完整物品資訊的農作物
-   *
-   * 用於需要存取種子和產出物品詳細資訊的業務邏輯
-   * 例如：計算成本、顯示收穫成果等
-   *
-   * @param cropId - 農作物 ID
-   * @returns 補全後的 Crop 物件（包含 seedItem 和 produceItem）
-   * @throws 當農作物或物品不存在時拋出錯誤
-   *
-   * 使用範例：
-   * ```typescript
-   * const enrichedCrop = this.cropService.getCropEnriched(0);
-   * console.log(enrichedCrop.seedItem.price);  // 種子價格
-   * ```
-   */
-  getCropEnriched(cropId: number) {
-    const crop = this.crops.find((c) => c.id === cropId);
-    if (!crop) {
-      throw new Error(`Crop with id ${cropId} not found in CropData`);
-    }
-    return this.itemService.enrichCrop(crop);
-  }
-
-  /**
    * 根據種子名稱查詢農作物
    *
    * 用於 UI 層根據用戶選擇查找對應作物

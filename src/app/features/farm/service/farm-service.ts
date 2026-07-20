@@ -4,6 +4,7 @@ import { InventoryService } from '../../../entities/inventory/service/inventory.
 import { DetailedCrop } from '../../../entities/crop/crop.model';
 import { Field } from '../../../entities/field/field-model';
 import { QuestManagerService } from '../../../core/quest-manager/quest-manager.service';
+import { CropService } from '../../../entities/crop/service/crop.service';
 
 /**
  * FarmService - 農田業務邏輯服務
@@ -30,6 +31,7 @@ export class FarmService {
     private inventoryService: InventoryService,
     private gameDataService: GameDataService,
     private questManagerService: QuestManagerService,
+    private cropService: CropService
   ) {}
 
   get fields(): Field[] {
@@ -164,12 +166,14 @@ export class FarmService {
     }
 
     const crop = tile.crop;
-    const produceItem = (crop as any).produceItem;
+    const detailedCrop = this.cropService.getCropBySeedId(crop.seedItemId);
 
-    if (!produceItem) {
-      console.error('農作物無法取得產出物品');
+    if (!detailedCrop) {
+      console.error('查無農作物');
       return;
     }
+
+    const produceItem = detailedCrop.produceItem;
 
     // 檢查背包空間
     if (this.inventoryService.isFull(crop.harvestAmount)) {

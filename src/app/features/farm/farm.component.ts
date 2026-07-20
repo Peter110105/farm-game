@@ -81,7 +81,7 @@ export class FarmComponent implements OnInit {
         return '🌱';
       case 'grown':
         if (crop) {
-          const detailedCrop = this.cropService.getCropEnriched(crop.id);
+          const detailedCrop = this.cropService.getCropBySeedId(crop.seedItemId);
           return detailedCrop?.produceItem.icon || '🌾';
         }
         return '🌾';

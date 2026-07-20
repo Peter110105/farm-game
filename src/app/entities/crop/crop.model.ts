@@ -5,7 +5,6 @@ import { Item } from "../item/item.model";
  * - 需要物品詳細資訊時，透過 ItemService 動態查詢
  */
 export interface Crop {
-  id: number
   seedItemId: number     // 種子物品ID
   produceItemId: number;  // 收穫物品ID
   growthTime: number;     // 成長時間(秒)
