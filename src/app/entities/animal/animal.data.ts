@@ -1,4 +1,5 @@
-import { AnimalType, Animal } from './animal.model';
+import { Animal } from './animal.model';
+import { ITEM_ID } from '../item/item.constants';
 
 export const AnimalData: Animal[] = [
   // ===== 雞系列 =====
@@ -24,7 +25,7 @@ export const AnimalData: Animal[] = [
     stage: 'adult',
     bornAt: 0,
     growthTime: 0, // 成年後不再長大
-    produceItemId: 100, // 產出：雞蛋 (id: 100)
+    produceItemId: ITEM_ID.EGG, // 產出：雞蛋
     produceInterval: 180, // 3 分鐘產一次
     lastProduceTime: 0,
   },
@@ -52,7 +53,7 @@ export const AnimalData: Animal[] = [
     stage: 'adult',
     bornAt: 0,
     growthTime: 0,
-    produceItemId: 101, // 產出：牛奶 (id: 101)
+    produceItemId: ITEM_ID.MILK, // 產出：牛奶
     produceInterval: 360, // 6 分鐘產一次
     lastProduceTime: 0,
   },
@@ -80,7 +81,7 @@ export const AnimalData: Animal[] = [
     stage: 'adult',
     bornAt: 0,
     growthTime: 0,
-    produceItemId: 102, // 產出：羊毛 (id: 102)
+    produceItemId: ITEM_ID.WOOL, // 產出：羊毛
     produceInterval: 300, // 5 分鐘產一次
     lastProduceTime: 0,
   },
