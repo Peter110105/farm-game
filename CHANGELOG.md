@@ -1,5 +1,12 @@
 # 📜 更新紀錄
 
+## [0.6.3] - 2026-07-20
+### 重構
+- **集中管理物品 ID**
+  - 新增 `item.constants.ts`，統一定義所有物品常數
+  - 更新 `item.data.ts`、`crop.data.ts`、`animal.data.ts` 使用常數
+  - 移除 Crop.id，直接以 seedItemId 作為唯一鍵
+
 ## [0.6.2] - 2026-07-14
 ### 重構
 - **重構 Crop、Animal 與 Item 資料結構**
