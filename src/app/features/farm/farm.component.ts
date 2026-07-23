@@ -81,10 +81,14 @@ export class FarmComponent implements OnInit {
         return '🌱';
       case 'grown':
         if (crop) {
-          const detailedCrop = this.cropService.getCropBySeedId(crop.seedItemId);
+          const detailedCrop = this.cropService.getCropBySeedId(
+            crop.seedItemId,
+          );
           return detailedCrop?.produceItem.icon || '🌾';
         }
         return '🌾';
+      case 'wilted':
+        return '💀';
       default:
         return '❓';
     }
