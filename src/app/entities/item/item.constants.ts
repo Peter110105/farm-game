@@ -5,7 +5,8 @@
  * - 種子 ID: 1-100
  * - 作物 ID: 101-200
  * - 動物產品 ID: 201-300
- * - 加工品 ID: 301-???
+ * - 加工品 ID: 301-100
+ * - 肥料 ID: 1000-???
  * 規則：ID 分配後不可更改（保護存檔相容性）
  */
 
@@ -34,7 +35,7 @@ export const ITEM_ID = {
   WOOL: 203,
   HONEY: 204,
 
-  // ========== 加工品 (301-???) ==========
+  // ========== 加工品 (301-1000) ==========
   TOAST: 301,
   CHEESE: 302,
   BUTTER: 303,
@@ -45,6 +46,11 @@ export const ITEM_ID = {
   YOGURT: 308,
   FRIES: 309,
   KETCHUP: 310,
+  // ========== 肥料 (1001-???) ==========
+  GROWTHFERTILIZER: 1001,
+  YIELDFERTILIZER: 1002,
+  DELUXEFERTILIZER: 1003,
+  THERMALFERTILIZER: 1004,
 } as const;
 
 // 類型導出（TypeScript 類型檢查）
