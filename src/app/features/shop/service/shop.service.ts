@@ -2,26 +2,29 @@ import { Injectable } from '@angular/core';
 import { InventoryService } from '../../../entities/inventory/service/inventory.service';
 import { Item } from '../../../entities/item/item.model';
 import { ItemData } from '../../../entities/item/item.data';
+import { FertilizerData } from '../../../entities/item/fertilizer/fertilizer.data';
 import { GameDataService } from '../../../core/game-data/game-data.service';
 import { QuestManagerService } from '../../../core/quest-manager/quest-manager.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ShopService {
-
   constructor(
-    private inventoryService: InventoryService, 
+    private inventoryService: InventoryService,
     private gameDataService: GameDataService,
     private questManagerService: QuestManagerService,
   ) {}
-  
+
   getItems(): Item[] {
-    return ItemData;
+    return ItemData.concat(FertilizerData);
   }
 
-  buyItem(item: Item, quantity: number = 1): { success: boolean; message: string } {
-    if(!this.inventoryService.isFull(quantity)){
+  buyItem(
+    item: Item,
+    quantity: number = 1,
+  ): { success: boolean; message: string } {
+    if (!this.inventoryService.isFull(quantity)) {
       const money = this.gameDataService.money;
       const cost = item.price * quantity;
       if (money >= cost) {
@@ -30,15 +33,18 @@ export class ShopService {
         // 更新任務進度
         this.questManagerService.updateProgress('buy', item.id, quantity);
         return { success: true, message: '購買成功' };
-      }else{
+      } else {
         return { success: false, message: '金錢不足' };
       }
-    }else{
+    } else {
       return { success: false, message: '背包空間不足' };
     }
   }
 
-  sellItem(item: Item, quantity: number = 1): { success: boolean; message: string } {
+  sellItem(
+    item: Item,
+    quantity: number = 1,
+  ): { success: boolean; message: string } {
     const sellPrice = item.sellPrice;
     if (sellPrice > 0) {
       this.gameDataService.addMoney(sellPrice * quantity);
@@ -49,5 +55,4 @@ export class ShopService {
     }
     return { success: false, message: '無法販售此物品' };
   }
-
 }
