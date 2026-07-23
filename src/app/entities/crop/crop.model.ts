@@ -1,14 +1,16 @@
-import { Item } from "../item/item.model";
+import { Item } from '../item/item.model';
+import { SeasonType } from '../season/season.model';
 
 /**
  * Crop Model - 農作物基礎定義
  * - 需要物品詳細資訊時，透過 ItemService 動態查詢
  */
 export interface Crop {
-  seedItemId: number     // 種子物品ID
-  produceItemId: number;  // 收穫物品ID
-  growthTime: number;     // 成長時間(秒)
-  harvestAmount: number;  // 收穫數量
+  seedItemId: number; // 種子物品ID
+  produceItemId: number; // 收穫物品ID
+  growthTime: number; // 成長時間(秒)
+  harvestAmount: number; // 收穫數量
+  plantableSeasons: SeasonType[]; // 可種植的季節清單
 }
 
 /**

@@ -11,6 +11,7 @@ export const CropData: Crop[] = [
     produceItemId: ITEM_ID.WHEAT, // 小麥
     growthTime: 15,
     harvestAmount: 2,
+    plantableSeasons: ['spring', 'summer'],
   },
   // === 玉米 ===
   {
@@ -18,6 +19,7 @@ export const CropData: Crop[] = [
     produceItemId: ITEM_ID.CORN, // 玉米
     growthTime: 20,
     harvestAmount: 1,
+    plantableSeasons: ['summer', 'autumn'],
   },
   // === 胡蘿蔔 ===
   {
@@ -25,6 +27,7 @@ export const CropData: Crop[] = [
     produceItemId: ITEM_ID.CARROT, // 胡蘿蔔
     growthTime: 30,
     harvestAmount: 3,
+    plantableSeasons: ['spring', 'autumn'],
   },
   // === 蘋果 ===
   {
@@ -32,6 +35,7 @@ export const CropData: Crop[] = [
     produceItemId: ITEM_ID.APPLE, // 蘋果
     growthTime: 120,
     harvestAmount: 5,
+    plantableSeasons: ['spring', 'autumn'],
   },
   // === 草莓 ===
   {
@@ -39,5 +43,23 @@ export const CropData: Crop[] = [
     produceItemId: ITEM_ID.STRAWBERRY, // 草莓
     growthTime: 150,
     harvestAmount: 5,
+    plantableSeasons: ['spring', 'autumn', 'winter'],
+  },
+  // === 番茄 ===
+  {
+    seedItemId: ITEM_ID.TOMATO_SEED,
+    produceItemId: ITEM_ID.TOMATO,
+    growthTime: 25,
+    harvestAmount: 2,
+    plantableSeasons: ['summer'], // 只有夏季
+  },
+
+  // === 馬鈴薯 ===
+  {
+    seedItemId: ITEM_ID.POTATO_SEED,
+    produceItemId: ITEM_ID.POTATO,
+    growthTime: 40,
+    harvestAmount: 4,
+    plantableSeasons: ['spring', 'autumn'],
   },
 ];
