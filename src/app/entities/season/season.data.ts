@@ -1,4 +1,4 @@
-import { Season, Weather } from "./season.model";
+import { Season, SeasonType, Weather, WeatherType } from "./season.model";
 
 /**
  * 四季定義
@@ -89,3 +89,26 @@ export const WeatherData: Weather[] = [
     description: '危險但富有機遇的天氣。作物快速生長 50%',
   },
 ];
+
+export const SeasonWeatherMap: Record<SeasonType, { type: WeatherType; weight: number }[]> = {
+  spring: [
+    {type: 'sunny', weight: 50},
+    {type: 'rainy', weight: 40},
+    {type: 'cloudy', weight: 10},
+  ],
+  summer: [
+    {type: 'sunny', weight: 60},
+    {type: 'rainy', weight: 20},
+    {type: 'stormy', weight: 20},
+  ],
+  autumn: [
+    {type: 'sunny', weight: 40},
+    {type: 'rainy', weight: 20},
+    {type: 'cloudy', weight: 40},
+  ],
+  winter: [
+    {type: 'sunny', weight: 50},
+    {type: 'rainy', weight: 10},
+    {type: 'snowy', weight: 40},
+  ],
+};

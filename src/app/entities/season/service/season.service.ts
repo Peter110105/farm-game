@@ -2,7 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { SeasonType, WeatherType } from '../season.model';
 import { GameDataService } from '../../../core/game-data/game-data.service';
-import { SeasonData, WeatherData } from '../season.data';
+import { SeasonData, WeatherData, SeasonWeatherMap } from '../season.data';
 
 /**
  * SeasonService - 季節系統核心服務
@@ -151,11 +151,29 @@ export class SeasonService {
    * 只在 nextDay() 中被呼叫，確保「一天只變一次」
    */
   private changeWeather(): void {
-    const weathers = WeatherData.map((w) => w.type);
-    const randomWeather = weathers[
-      Math.floor(Math.random() * weathers.length)
-    ] as WeatherType;
-    this._currentWeather.next(randomWeather);
+    const weathers = SeasonWeatherMap[this._currentSeason.value];
+    // 1. 計算總權重（安全過濾負數）
+    const totalWeight = weathers.reduce((sum, o) => sum + Math.max(o.weight, 0), 0);
+
+    // 2. 隨機取得一個落點
+    let result = Math.random() * totalWeight;
+    let randomWeather = null;
+
+    // 3. 開始輪詢扣除權重
+    for(const weather of weathers) {
+      const weight = Math.max(weather.weight);
+      if(result < weight) {
+        randomWeather = weather.type;
+        break;
+      }
+      result -= weight;
+    }
+
+    if(!randomWeather) {
+      this._currentWeather.next('sunny');
+    }else {
+      this._currentWeather.next(randomWeather);
+    }
   }
 
   // ===== 查詢方法 =====
