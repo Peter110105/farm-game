@@ -1,0 +1,71 @@
+<div class="season-display">
+  <!-- 季節卡片 -->
+  <div
+    class="season-card"
+    [ngStyle]="{ backgroundColor: currentSeasonInfo?.seasonColor }"
+  >
+    <div class="season-header">
+      <span class="season-icon">{{ currentSeasonInfo?.icon }}</span>
+      <h3 class="season-name">{{ currentSeasonInfo?.name }}</h3>
+    </div>
+
+    <!-- 季節進度 -->
+    <div class="season-progress">
+      <p>第 {{ dayOfSeason }}/30 天</p>
+      <nz-progress
+        [nzPercent]="seasonProgress"
+        nzStrokeColor="#ffd666"
+        nzSize="small"
+      ></nz-progress>
+    </div>
+
+    <!-- 季節描述 -->
+    <p class="season-description">{{ currentSeasonInfo?.description }}</p>
+  </div>
+
+  <!-- 天氣卡片 -->
+  <div class="weather-card">
+    <div class="weather-header">
+      <span class="weather-icon">{{ currentWeather?.icon }}</span>
+      <h3 class="weather-name">{{ currentWeather?.name }}</h3>
+    </div>
+
+    <!-- 天氣效果 -->
+    <div class="weather-effects">
+      <p
+        class="effect-item"
+        [class.positive]="currentWeather!.growthMultiplier > 1"
+      >
+        🌱 生長:
+        <span class="multiplier"
+          >{{ (currentWeather?.growthMultiplier || 1).toFixed(1) }}x</span
+        >
+        <span
+          class="effect-tag"
+          [class.boost]="currentWeather!.growthMultiplier > 1"
+          [class.debuff]="currentWeather!.growthMultiplier < 1"
+        >
+          {{ getMultiplierLabel(currentWeather?.growthMultiplier) }}
+        </span>
+      </p>
+      <p
+        class="effect-item"
+        [class.positive]="currentWeather!.produceMultiplier > 1"
+      >
+        🍎 產出:
+        <span class="multiplier"
+          >{{ (currentWeather?.produceMultiplier || 1).toFixed(1) }}x</span
+        >
+        <span
+          class="effect-tag"
+          [class.boost]="currentWeather!.produceMultiplier > 1"
+          [class.debuff]="currentWeather!.produceMultiplier < 1"
+        >
+          {{ getMultiplierLabel(currentWeather?.produceMultiplier) }}
+        </span>
+      </p>
+    </div>
+
+    <p class="weather-description">{{ currentWeather?.description }}</p>
+  </div>
+</div>

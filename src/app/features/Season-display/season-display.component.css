@@ -1,0 +1,107 @@
+.season-display {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.season-card,
+.weather-card {
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.season-card {
+  color: #fff;
+}
+
+.season-card:hover,
+.weather-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.season-header,
+.weather-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.season-icon,
+.weather-icon {
+  font-size: 24px;
+}
+
+.season-name,
+.weather-name {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.season-progress {
+  margin: 8px 0;
+}
+
+.season-progress p {
+  margin: 4px 0;
+  font-size: 12px;
+}
+
+.season-description,
+.weather-description {
+  margin: 8px 0 0 0;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.weather-effects {
+  margin: 8px 0;
+  padding: 8px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
+
+.effect-item {
+  margin: 4px 0;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.effect-item.positive {
+  color: #52c41a;
+}
+
+.multiplier {
+  font-weight: bold;
+  font-family: monospace;
+}
+
+.effect-tag {
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.effect-tag.boost {
+  background-color: #b7eb8f;
+  color: #274e1d;
+}
+
+.effect-tag.debuff {
+  background-color: #ffccc7;
+  color: #5c2416;
+}
+
+@media (max-width: 768px) {
+  .season-display {
+    grid-template-columns: 1fr;
+  }
+}
