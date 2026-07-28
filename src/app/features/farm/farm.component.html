@@ -12,11 +12,35 @@
   </button>
   <hr>
   <div class="farm-grid" [style.gridTemplateColumns]="getGridColumns()">
-    @for (filed of farmService.fields; track $index) {
+    @for (field of farmService.fields; track $index) {
       <div class="filed" (click)="onTileClick($index)">
-        {{getEmoji(filed.status, filed.crop)}}
+        {{getEmoji(field.status, field.crop)}}
       </div>
     }
   </div>
 </div>
+<nz-modal
+  [(nzVisible)]="fertilizerModalVisible"
+  nzTitle="選擇要施用的肥料"
+  (nzOnCancel)="fertilizerModalVisible = false"
+  [nzFooter]="null"
+>
+  <ng-container *nzModalContent>
+    @if (availableFertilizers.length === 0) {
+      <nz-empty nzNotFoundContent="背包中沒有肥料，先去商店買一些吧"></nz-empty>
+    } @else {
+      <div class="fertilizer-option-list">
+        @for (fertilizer of availableFertilizers; track fertilizer.id) {
+          <div class="fertilizer-option" (click)="useFertilizer(fertilizer.id)">
+            <span class="icon">{{ fertilizer.icon }}</span>
+            <div class="info">
+              <p class="name">{{ fertilizer.name }} <span class="qty">x{{ fertilizer.quantity }}</span></p>
+              <p class="desc">{{ fertilizer.description }}</p>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </ng-container>
+</nz-modal>
 

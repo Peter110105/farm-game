@@ -4,6 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { CropService } from '../../entities/crop/service/crop.service';
 import { Crop, DetailedCrop } from '../../entities/crop/crop.model';
 import { FarmService } from './service/farm-service';
+import { FertilizerItem, FertilizerService } from '../../entities/item/fertilizer/service/fertilizer.service';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzEmptyModule } from 'ng-zorro-antd/empty';
 
 /**
  * FarmComponent - 農田 UI 元件
@@ -14,7 +17,7 @@ import { FarmService } from './service/farm-service';
  */
 @Component({
   selector: 'app-farm-plot',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, NzModalModule, NzEmptyModule],
   standalone: true,
   providers: [CropService],
   templateUrl: './farm.component.html',
@@ -23,9 +26,16 @@ import { FarmService } from './service/farm-service';
 export class FarmComponent implements OnInit {
   crops: DetailedCrop[] = [];
   selectedCrop!: DetailedCrop;
+
+  // ===== 施肥彈窗狀態 =====
+  fertilizerModalVisible = false;
+  currentFieldIndex: number | null = null; // 目前正在施肥的農田格
+  availableFertilizers: FertilizerItem[] = []; // 背包中可用的肥料清
+
   constructor(
     private cropService: CropService,
     protected farmService: FarmService,
+    private fertilizerService: FertilizerService,
   ) {}
 
   ngOnInit() {
@@ -62,8 +72,12 @@ export class FarmComponent implements OnInit {
         console.error('種植失敗:', error);
         alert('種植失敗，請檢查資料配置');
       }
+    } else if (status === 'planted') {
+      this.openFertilizerModal(index);
     } else if (status === 'grown') {
       this.farmService.harvest(index);
+    } else if (status === 'wilted') {
+      this.farmService.clearWiltedCrop(index);
     }
   }
 
@@ -116,5 +130,39 @@ export class FarmComponent implements OnInit {
     } else {
       console.log('農田升級成功');
     }
+  }
+
+  /**
+   * 打開施肥彈窗
+   */
+  openFertilizerModal(index: number): void {
+    this.currentFieldIndex = index;
+    this.availableFertilizers =
+      this.fertilizerService.getFertilizersInInventory();
+    this.fertilizerModalVisible = true;
+  }
+
+  /**
+   * 使用選中的肥料
+   * 流程：先向 FertilizerService 消耗背包庫存，成功後才套用到田地
+   */
+  useFertilizer(fertilizerId: number): void {
+    if (this.currentFieldIndex === null) return;
+
+    const useResult = this.fertilizerService.tryUseFertilizer(fertilizerId);
+    if (!useResult.success || !useResult.fertilizer) {
+      alert(useResult.message);
+      return;
+    }
+
+    const applyResult = this.farmService.applyFertilizer(
+      this.currentFieldIndex,
+      useResult.fertilizer,
+    );
+    alert(applyResult.message);
+
+    // 重新整理清單（因為背包數量已變化），關閉彈窗
+    this.availableFertilizers = this.fertilizerService.getFertilizersInInventory();
+    this.fertilizerModalVisible = false;
   }
 }

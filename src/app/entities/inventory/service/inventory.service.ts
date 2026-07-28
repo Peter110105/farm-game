@@ -1,24 +1,23 @@
 import { Injectable } from '@angular/core';
 import { Inventory } from '../inventory.model';
-import { Item } from '../../item/item.model';
+import { Item, ItemType } from '../../item/item.model';
 import { GameDataService } from '../../../core/game-data/game-data.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class InventoryService {
-
   private inventory: Inventory = {
     lv: 1,
     items: [],
-    capacity: 20
+    capacity: 20,
   };
   private upgradeCost = 50;
 
   constructor(private gameDataService: GameDataService) {}
 
   // 設定背包
-  setInventory(inventory:Inventory): void{
+  setInventory(inventory: Inventory): void {
     this.inventory = inventory;
     this.upgradeCost = 50 + (this.inventory.lv - 1) * 20; // 初始升級成本
   }
@@ -30,10 +29,10 @@ export class InventoryService {
   getUpgradeCost(): number {
     return this.upgradeCost;
   }
-  // 
+  //
   getItemQuantity(item: Item): number {
     const inventoryItem = this.inventory.items.find(
-      i => i.name === item.name && i.type === item.type
+      (i) => i.name === item.name && i.type === item.type,
     );
     return inventoryItem ? inventoryItem.quantity : 0;
   }
@@ -47,12 +46,12 @@ export class InventoryService {
   }
   // 是否滿了
   isFull(quantity: number = 0): boolean {
-    return  this.inventory.capacity < this.getTotalQuantity() + quantity;
+    return this.inventory.capacity < this.getTotalQuantity() + quantity;
   }
   // 增加物品
-  addItem(newItem: Item, quantity: number = 1){
+  addItem(newItem: Item, quantity: number = 1) {
     const existing = this.inventory.items.find(
-      item => item.name === newItem.name && item.type === newItem.type
+      (item) => item.name === newItem.name && item.type === newItem.type,
     );
 
     if (existing) {
@@ -62,9 +61,9 @@ export class InventoryService {
     }
   }
   // 移除物品
-  removeItem(item: Item, quantity: number): boolean{
+  removeItem(item: Item, quantity: number): boolean {
     const index = this.inventory.items.findIndex(
-      i => i.name === item.name && i.type === item.type
+      (i) => i.name === item.name && i.type === item.type,
     );
     if (index === -1) {
       return false;
@@ -79,10 +78,18 @@ export class InventoryService {
     }
     return true;
   }
+
+  getItemsByType(itemType: ItemType): Item[] {
+    return this.inventory.items.filter((item) => item.type === itemType);
+  }
+
   // 檢查升級條件
-  tryUpgradeInventory():{ success: boolean; message: string } {
+  tryUpgradeInventory(): { success: boolean; message: string } {
     if (this.gameDataService.money < this.upgradeCost) {
-      return { success: false, message: `金錢不足，需要 ${this.upgradeCost - this.gameDataService.money} 金幣才能升級背包` };
+      return {
+        success: false,
+        message: `金錢不足，需要 ${this.upgradeCost - this.gameDataService.money} 金幣才能升級背包`,
+      };
     }
     this.gameDataService.subMoney(this.upgradeCost);
     this.upgradeInventory();
@@ -95,9 +102,9 @@ export class InventoryService {
     this.upgradeCost = Math.floor(this.upgradeCost + this.inventory.lv * 20);
     this.inventory.lv += 1;
   }
-      
+
   // 清空背包
-  clear(): void{
+  clear(): void {
     this.inventory.items = [];
     this.inventory.capacity = 20;
     this.upgradeCost = 50;
